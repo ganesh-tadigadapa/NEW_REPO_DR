@@ -1,0 +1,16 @@
+{
+  "frozen_at": "2026-09-13T15:09:04.065237+00:00",
+  "fingerprint": "b608ec0742b692db",
+  "run_id": "aptos-kaggle-run1",
+  "cuts": [
+    0.32,
+    0.6154985894767017,
+    0.9700000000000001,
+    0.61
+  ],
+  "temperature": 0.9879083555589006,
+  "image_size": 512,
+  "backbone": "efficientnetv2s",
+  "git_commit": "unknown",
+  "statement": "Thresholds and temperature are fitted on the validation split only. The external holdout has not been evaluated at this point."
+}

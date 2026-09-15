@@ -1,0 +1,36 @@
+# Hugging Face Spaces image for the inference API.
+#
+# WHY HUGGING FACE AND NOT RENDER/CLOUD RUN
+#   MEASURED on this machine: the API holds 1021 MB RSS after one inference (TensorFlow
+#   runtime plus the 234 MB EfficientNetV2-S model). Render's free tier gives 512 MB, so
+#   it would OOM on the first upload -- the exact moment a judge is watching.
+#   Hugging Face Spaces CPU-basic is free and gives 16 GB RAM and 2 vCPU, with no card
+#   required. It is built for exactly this: a public demo of a model.
+#
+# Spaces requires the app to listen on port 7860.
+
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    TF_CPP_MIN_LOG_LEVEL=3 \
+    OMP_NUM_THREADS=2 \
+    DR_MODEL_DIR=/app/artifacts/model
+
+# opencv-python-headless still needs libgl/libglib at runtime
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libglib2.0-0 libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements-serve.txt .
+RUN pip install --no-cache-dir -r requirements-serve.txt
+
+COPY src/ ./src/
+COPY artifacts/model/ ./artifacts/model/
+COPY results/quality_gate/thresholds.json ./results/quality_gate/thresholds.json
+COPY results/active/ ./results/active/
+
+EXPOSE 7860
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "7860"]

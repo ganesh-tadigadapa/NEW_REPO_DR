@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-09-13T16:05:21.129462Z",
+  "subset": "heldout",
+  "n": 60,
+  "thresholds_used": {
+    "focus_tenengrad_min": 94.127,
+    "illumination_grid_cv_max": 0.254,
+    "fov_retina_fraction_min": 0.6042,
+    "_source": "results/quality_gate/thresholds.json",
+    "_fitted": true
+  },
+  "label_provenance": "Ground truth BY CONSTRUCTION, not human-graded: real APTOS test_images with controlled degradations (scripts/make_quality_labelset.py). Thresholds were fitted on a disjoint 'fit' subset split by source image.",
+  "positive_class": "ungradeable (the gate should refuse it)",
+  "confusion": {
+    "tp": 32,
+    "fn": 4,
+    "fp": 5,
+    "tn": 19
+  },
+  "overall": {
+    "recall_ungradeable": 0.8889,
+    "specificity_gradeable": 0.7917,
+    "precision": 0.8649,
+    "f1": 0.8767,
+    "accuracy": 0.85,
+    "false_accept_rate": 0.1111,
+    "false_reject_rate": 0.2083
+  },
+  "per_defect_recall": {
+    "focus": {
+      "n": 14,
+      "caught": 11,
+      "recall": 0.7857,
+      "caught_by_the_matching_check": 11
+    },
+    "fov": {
+      "n": 15,
+      "caught": 15,
+      "recall": 1.0,
+      "caught_by_the_matching_check": 15
+    },
+    "illumination": {
+      "n": 7,
+      "caught": 6,
+      "recall": 0.8571,
+      "caught_by_the_matching_check": 6
+    }
+  },
+  "check_fire_counts_on_true_ungradeable": {
+    "focus": 22,
+    "field_of_view": 15,
+    "illumination": 8
+  },
+  "errors": [
+    {
+      "path": "good_42442bd02e81.png",
+      "defect": "FALSE_REJECT",
+      "fired": [
+        "focus",
+        "illumination"
+      ]
+    },
+    {
+      "path": "good_51323e9d2070.png",
+      "defect": "FALSE_REJECT",
+      "fired": [
+        "focus"
+      ]
+    },
+    {
+      "path": "good_7ac156fd3932.png",
+      "defect": "FALSE_REJECT",
+      "fired": [
+        "focus"
+      ]
+    },
+    {
+      "path": "good_90fc89319207.png",
+      "defect": "FALSE_REJECT",
+      "fired": [
+        "focus"
+      ]
+    },
+    {
+      "path": "good_3a3b00bad960.png",
+      "defect": "FALSE_REJECT",
+      "fired": [
+        "focus",
+        "illumination"
+      ]
+    },
+    {
+      "path": "bad_illumination_3e7fc52c3541.png",
+      "defect": "illumination"
+    },
+    {
+      "path": "bad_focus_97cc3916d882.png",
+      "defect": "focus"
+    },
+    {
+      "path": "bad_focus_251f4323b63d.png",
+      "defect": "focus"
+    },
+    {
+      "path": "bad_focus_9c27b212d50b.png",
+      "defect": "focus"
+    }
+  ],
+  "caveat": "The gradeable class assumes unmodified APTOS images are gradeable. APTOS is noisy and some genuinely are not, so false rejects may include correct refusals. Reported specificity is therefore a LOWER bound."
+}

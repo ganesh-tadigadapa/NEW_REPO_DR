@@ -1,0 +1,391 @@
+{
+  "generated_at": "2026-09-13T13:52:56.539193Z",
+  "dataset": "IDRiD C. Localization, training set",
+  "frame": "1024px preprocessed working frame (both implementations see identical pixels)",
+  "metric": "Euclidean distance from the annotated centre",
+  "validity_note": "Each implementation is scored against the SAME ground truth. The two detectors are NOT compared to each other: they use different algorithms, so a detector-vs-detector distance would not indicate which is correct.",
+  "disc_radius_assumption": "within_1_disc_radius uses 0.07 x width as a typical disc radius",
+  "n_images": 60,
+  "summary": {
+    "python_od": {
+      "n": 60,
+      "mean_error_px": 29.44,
+      "median_error_px": 24.5,
+      "mean_error_frac_of_width": 0.0287,
+      "within_1_disc_radius_pct": 96.7
+    },
+    "python_fovea": {
+      "n": 60,
+      "mean_error_px": 152.32,
+      "median_error_px": 59.88,
+      "mean_error_frac_of_width": 0.1488,
+      "within_1_disc_radius_pct": 50.0
+    },
+    "matlab_od": {
+      "n": 60,
+      "mean_error_px": 36.9,
+      "median_error_px": 31.71,
+      "mean_error_frac_of_width": 0.036,
+      "within_1_disc_radius_pct": 96.7
+    },
+    "matlab_fovea": {
+      "n": 60,
+      "mean_error_px": 157.82,
+      "median_error_px": 150.7,
+      "mean_error_frac_of_width": 0.1541,
+      "within_1_disc_radius_pct": 11.7
+    }
+  },
+  "per_image": [
+    {
+      "image": "IDRiD_001",
+      "python_od_px": 31.56,
+      "python_fovea_px": 381.17,
+      "matlab_od_px": 29.75,
+      "matlab_fovea_px": 124.06
+    },
+    {
+      "image": "IDRiD_002",
+      "python_od_px": 22.22,
+      "python_fovea_px": 13.1,
+      "matlab_od_px": 35.91,
+      "matlab_fovea_px": 88.07
+    },
+    {
+      "image": "IDRiD_003",
+      "python_od_px": 30.26,
+      "python_fovea_px": 40.57,
+      "matlab_od_px": 34.37,
+      "matlab_fovea_px": 117.54
+    },
+    {
+      "image": "IDRiD_004",
+      "python_od_px": 30.47,
+      "python_fovea_px": 284.8,
+      "matlab_od_px": 62.58,
+      "matlab_fovea_px": 251.64
+    },
+    {
+      "image": "IDRiD_005",
+      "python_od_px": 14.79,
+      "python_fovea_px": 187.82,
+      "matlab_od_px": 21.74,
+      "matlab_fovea_px": 171.19
+    },
+    {
+      "image": "IDRiD_006",
+      "python_od_px": 28.86,
+      "python_fovea_px": 14.07,
+      "matlab_od_px": 35.89,
+      "matlab_fovea_px": 96.01
+    },
+    {
+      "image": "IDRiD_007",
+      "python_od_px": 111.76,
+      "python_fovea_px": 476.2,
+      "matlab_od_px": 91.61,
+      "matlab_fovea_px": 149.15
+    },
+    {
+      "image": "IDRiD_008",
+      "python_od_px": 22.68,
+      "python_fovea_px": 32.99,
+      "matlab_od_px": 35.28,
+      "matlab_fovea_px": 232.9
+    },
+    {
+      "image": "IDRiD_009",
+      "python_od_px": 16.64,
+      "python_fovea_px": 173.95,
+      "matlab_od_px": 17.59,
+      "matlab_fovea_px": 225.79
+    },
+    {
+      "image": "IDRiD_010",
+      "python_od_px": 18.43,
+      "python_fovea_px": 254.41,
+      "matlab_od_px": 37.52,
+      "matlab_fovea_px": 95.23
+    },
+    {
+      "image": "IDRiD_011",
+      "python_od_px": 12.53,
+      "python_fovea_px": 8.66,
+      "matlab_od_px": 29.48,
+      "matlab_fovea_px": 243.65
+    },
+    {
+      "image": "IDRiD_012",
+      "python_od_px": 12.24,
+      "python_fovea_px": 264.4,
+      "matlab_od_px": 13.99,
+      "matlab_fovea_px": 66.81
+    },
+    {
+      "image": "IDRiD_013",
+      "python_od_px": 23.48,
+      "python_fovea_px": 304.65,
+      "matlab_od_px": 26.35,
+      "matlab_fovea_px": 68.09
+    },
+    {
+      "image": "IDRiD_014",
+      "python_od_px": 25.98,
+      "python_fovea_px": 26.5,
+      "matlab_od_px": 29.53,
+      "matlab_fovea_px": 179.93
+    },
+    {
+      "image": "IDRiD_015",
+      "python_od_px": 7.97,
+      "python_fovea_px": 444.28,
+      "matlab_od_px": 16.13,
+      "matlab_fovea_px": 70.34
+    },
+    {
+      "image": "IDRiD_016",
+      "python_od_px": 20.66,
+      "python_fovea_px": 39.48,
+      "matlab_od_px": 42.05,
+      "matlab_fovea_px": 101.69
+    },
+    {
+      "image": "IDRiD_017",
+      "python_od_px": 25.08,
+      "python_fovea_px": 405.28,
+      "matlab_od_px": 43.2,
+      "matlab_fovea_px": 89.36
+    },
+    {
+      "image": "IDRiD_018",
+      "python_od_px": 26.14,
+      "python_fovea_px": 19.72,
+      "matlab_od_px": 31.79,
+      "matlab_fovea_px": 152.25
+    },
+    {
+      "image": "IDRiD_019",
+      "python_od_px": 33.46,
+      "python_fovea_px": 12.17,
+      "matlab_od_px": 42.85,
+      "matlab_fovea_px": 220.41
+    },
+    {
+      "image": "IDRiD_020",
+      "python_od_px": 27.89,
+      "python_fovea_px": 424.23,
+      "matlab_od_px": 23.15,
+      "matlab_fovea_px": 55.41
+    },
+    {
+      "image": "IDRiD_021",
+      "python_od_px": 20.62,
+      "python_fovea_px": 22.47,
+      "matlab_od_px": 30.01,
+      "matlab_fovea_px": 54.47
+    },
+    {
+      "image": "IDRiD_022",
+      "python_od_px": 277.2,
+      "python_fovea_px": 206.33,
+      "matlab_od_px": 283.06,
+      "matlab_fovea_px": 194.52
+    },
+    {
+      "image": "IDRiD_023",
+      "python_od_px": 34.86,
+      "python_fovea_px": 10.16,
+      "matlab_od_px": 37.6,
+      "matlab_fovea_px": 134.74
+    },
+    {
+      "image": "IDRiD_024",
+      "python_od_px": 29.22,
+      "python_fovea_px": 13.54,
+      "matlab_od_px": 43.89,
+      "matlab_fovea_px": 252.15
+    },
+    {
+      "image": "IDRiD_025",
+      "python_od_px": 20.93,
+      "python_fovea_px": 20.09,
+      "matlab_od_px": 16.34,
+      "matlab_fovea_px": 287.51
+    },
+    {
+      "image": "IDRiD_026",
+      "python_od_px": 12.97,
+      "python_fovea_px": 78.22,
+      "matlab_od_px": 12.93,
+      "matlab_fovea_px": 245.26
+    },
+    {
+      "image": "IDRiD_027",
+      "python_od_px": 27.55,
+      "python_fovea_px": 27.36,
+      "matlab_od_px": 28.92,
+      "matlab_fovea_px": 250.65
+    },
+    {
+      "image": "IDRiD_028",
+      "python_od_px": 24.22,
+      "python_fovea_px": 14.36,
+      "matlab_od_px": 30.57,
+      "matlab_fovea_px": 254.82
+    },
+    {
+      "image": "IDRiD_029",
+      "python_od_px": 14.79,
+      "python_fovea_px": 41.9,
+      "matlab_od_px": 16.93,
+      "matlab_fovea_px": 199.17
+    },
+    {
+      "image": "IDRiD_030",
+      "python_od_px": 4.06,
+      "python_fovea_px": 204.75,
+      "matlab_od_px": 23.02,
+      "matlab_fovea_px": 243.37
+    },
+    {
+      "image": "IDRiD_031",
+      "python_od_px": 36.51,
+      "python_fovea_px": 294.61,
+      "matlab_od_px": 38.41,
+      "matlab_fovea_px": 102.94
+    },
+    {
+      "image": "IDRiD_032",
+      "python_od_px": 16.51,
+      "python_fovea_px": 22.06,
+      "matlab_od_px": 18.35,
+      "matlab_fovea_px": 121.9
+    },
+    {
+      "image": "IDRiD_033",
+      "python_od_px": 35.56,
+      "python_fovea_px": 338.98,
+      "matlab_od_px": 43.26,
+      "matlab_fovea_px": 141.32
+    },
+    {
+      "image": "IDRiD_034",
+      "python_od_px": 16.96,
+      "python_fovea_px": 17.73,
+      "matlab_od_px": 28.15,
+      "matlab_fovea_px": 60.85
+    },
+    {
+      "image": "IDRiD_035",
+      "python_od_px": 29.16,
+      "python_fovea_px": 140.13,
+      "matlab_od_px": 34.7,
+      "matlab_fovea_px": 172.0
+    },
+    {
+      "image": "IDRiD_036",
+      "python_od_px": 17.83,
+      "python_fovea_px": 236.22,
+      "matlab_od_px": 38.87,
+      "matlab_fovea_px": 242.37
+    },
+    {
+      "image": "IDRiD_037",
+      "python_od_px": 21.72,
+      "python_fovea_px": 327.47,
+      "matlab_od_px": 16.35,
+      "matlab_fovea_px": 88.69
+    },
+    {
+      "image": "IDRiD_038",
+      "python_od_px": 18.63,
+      "python_fovea_px": 377.46,
+      "matlab_od_px": 29.64,
+      "matlab_fovea_px": 52.95
+    },
+    {
+      "image": "IDRiD_039",
+      "python_od_px": 26.86,
+      "python_fovea_px": 366.16,
+      "matlab_od_px": 35.61,
+      "matlab_fovea_px": 90.48
+    },
+    {
+      "image": "IDRiD_040",
+      "python_od_px": 27.34,
+      "python_fovea_px": 5.63,
+      "matlab_od_px": 43.48,
+      "matlab_fovea_px": 105.47
+    },
+    {
+      "image": "IDRiD_041",
+      "python_od_px": 22.07,
+      "python_fovea_px": 1.46,
+      "matlab_od_px": 23.97,
+      "matlab_fovea_px": 163.72
+    },
+    {
+      "image": "IDRiD_042",
+      "python_od_px": 18.27,
+      "python_fovea_px": 77.86,
+      "matlab_od_px": 29.24,
+      "matlab_fovea_px": 180.27
+    },
+    {
+      "image": "IDRiD_043",
+      "python_od_px": 19.68,
+      "python_fovea_px": 5.53,
+      "matlab_od_px": 33.39,
+      "matlab_fovea_px": 248.48
+    },
+    {
+      "image": "IDRiD_044",
+      "python_od_px": 19.8,
+      "python_fovea_px": 9.81,
+      "matlab_od_px": 41.55,
+      "matlab_fovea_px": 109.75
+    },
+    {
+      "image": "IDRiD_045",
+      "python_od_px": 16.15,
+      "python_fovea_px": 16.25,
+      "matlab_od_px": 23.75,
+      "matlab_fovea_px": 228.53
+    },
+    {
+      "image": "IDRiD_046",
+      "python_od_px": 25.92,
+      "python_fovea_px": 336.03,
+      "matlab_od_px": 26.24,
+      "matlab_fovea_px": 109.33
+    },
+    {
+      "image": "IDRiD_047",
+      "python_od_px": 23.34,
+      "python_fovea_px": 408.87,
+      "matlab_od_px": 27.14,
+      "matlab_fovea_px": 170.69
+    },
+    {
+      "image": "IDRiD_048",
+      "python_od_px": 24.79,
+      "python_fovea_px": 3.98,
+      "matlab_od_px": 37.74,
+      "matlab_fovea_px": 225.52
+    },
+    {
+      "image": "IDRiD_049",
+      "python_od_px": 37.15,
+      "python_fovea_px": 20.57,
+      "matlab_od_px": 34.21,
+      "matlab_fovea_px": 251.02
+    },
+    {
+      "image": "IDRiD_050",
+      "python_od_px": 34.02,
+      "python_fovea_px": 9.93,
+      "matlab_od_px": 46.46,
+      "matlab_fovea_px": 212.09
+    }
+  ]
+}

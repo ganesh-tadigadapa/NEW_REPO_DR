@@ -1,0 +1,36 @@
+# Serving-only dependencies for the Cloud Run image.
+#
+# tensorflow-cpu, NOT tensorflow: the full wheel bundles ~1.5 GB of CUDA/cuDNN libraries
+# that a Cloud Run instance has no GPU to use. They are dead weight that lands directly
+# on cold-start latency — which the judge experiences as the first upload hanging.
+#
+# MEASURED, honestly: the linux/amd64 slim image is 2.53 GB on disk (docker images) /
+# 575 MB by `docker image inspect .Size`. Those two numbers measure different things and
+# must not be mixed -- an earlier note here claimed a "2.75 GB -> 575 MB, 4.8x reduction"
+# which was wrong twice over: it compared `docker images` against `inspect`, AND compared
+# an arm64 build against an amd64 one. On arm64 the plain `tensorflow` wheel ships no CUDA
+# at all (CUDA is x86-only), so that comparison could never have shown what it claimed.
+#
+# MEASURED, same platform, same version, same method (pip download on linux/amd64):
+#     tensorflow      2.16.2  ->  590,660,880 bytes  (591 MB)
+#     tensorflow-cpu  2.16.2  ->  214,055,683 bytes  (214 MB)
+# a 377 MB smaller wheel, 2.8x. That difference is the bundled CUDA/cuDNN payload.
+#
+# Careful with what that does and does not say: it is the WHEEL delta. The installed
+# on-disk delta is larger, because wheels are compressed — but we have not built an amd64
+# image with plain `tensorflow` to measure it, so do not quote an image-size reduction.
+#
+# What IS verified: this image is linux/amd64 and serves the full pipeline -- health,
+# grading, Grad-CAM, lesion overlay, PDF, and the 422 refusal.
+tensorflow-cpu==2.16.2
+
+numpy==1.26.4
+opencv-python-headless==4.10.0.84
+Pillow==10.4.0
+scipy==1.13.1
+scikit-image==0.24.0
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.17
+pydantic==2.9.2
+reportlab==4.2.5

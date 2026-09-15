@@ -1,0 +1,58 @@
+[
+  {
+    "file": "aptos-grade0.png",
+    "title": "No DR (grade 0)",
+    "description": "Held-out APTOS image, ground-truth grade 0. Not referable. Replaced the previous grade-0 sample, which the newly fitted quality thresholds refuse (focus 55.8 vs threshold 94.1) \u2014 a genuine false reject, see the 20.8% false-reject rate in docs/BENCHMARKS.md.",
+    "expect": "graded",
+    "source": "APTOS 4958bfcc9f38 (validation split, held out of training)",
+    "true_grade": 0
+  },
+  {
+    "file": "aptos-grade1.png",
+    "title": "Mild NPDR (grade 1)",
+    "description": "Held-out APTOS image, ground-truth grade 1. Microaneurysms only, not referable.",
+    "expect": "graded",
+    "source": "APTOS 086d41d17da8.png (validation split, held out of training)",
+    "true_grade": 1
+  },
+  {
+    "file": "aptos-grade2.png",
+    "title": "Moderate NPDR (grade 2)",
+    "description": "Held-out APTOS image, ground-truth grade 2. Referable.",
+    "expect": "graded",
+    "source": "APTOS 74418f620068.png (validation split, held out of training)",
+    "true_grade": 2
+  },
+  {
+    "file": "aptos-grade3.png",
+    "title": "Severe NPDR (grade 3)",
+    "description": "Held-out APTOS image, ground-truth grade 3. Referable. Grade 3 is this model's weakest class (F1 0.267).",
+    "expect": "graded",
+    "source": "APTOS 74eee788edee.png (validation split, held out of training)",
+    "true_grade": 3
+  },
+  {
+    "file": "aptos-grade4.png",
+    "title": "Proliferative DR (grade 4)",
+    "description": "Held-out APTOS image, ground-truth grade 4. Referable.",
+    "expect": "graded",
+    "source": "APTOS 22895c89792f.png (validation split, held out of training)",
+    "true_grade": 4
+  },
+  {
+    "file": "aptos-ungradeable-focus.png",
+    "title": "Ungradeable (real)",
+    "description": "A genuine APTOS image that fails the quality gate on BOTH focus and illumination. The recapture advice names lighting as the likely root cause, because severe uneven lighting drags the focus score down: measured on 33 illumination-degraded images, 29 tripped both checks and none tripped illumination alone. Kept at native resolution.",
+    "expect": "refused",
+    "source": "APTOS 8676427e4625 (validation split, held out of training)",
+    "true_grade": 1
+  },
+  {
+    "file": "aptos-ungradeable-fov.png",
+    "title": "Retina out of frame (cropped)",
+    "description": "A held-out APTOS image CROPPED to 40% width to simulate a mis-framed capture. Should be REFUSED on field of view.",
+    "expect": "refused",
+    "source": "APTOS e68bdd36e589.png (validation split), cropped to 40% width \u2014 modified, not a natural capture",
+    "modified": true
+  }
+]

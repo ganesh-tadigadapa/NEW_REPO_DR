@@ -1,0 +1,72 @@
+{
+  "fitted_at": "2026-09-11T16:05:27.554581+00:00",
+  "labels_file": "data/interim/synthetic/quality_labels.csv",
+  "n_images": 13,
+  "n_skipped_unreadable": 0,
+  "n_gradeable": 10,
+  "provenance": "synthetic generator ground truth (scripts/make_synthetic_fundus.py defect flag)",
+  "tag": "synthetic",
+  "synthetic": true,
+  "thresholds": {
+    "focus_tenengrad_min": 22.5463,
+    "illumination_grid_cv_max": 0.1046,
+    "fov_retina_fraction_min": 0.7767
+  },
+  "per_check_fit": {
+    "focus_tenengrad_min": {
+      "threshold": 22.546271614105613,
+      "sensitivity": 1.0,
+      "specificity": 0.6667,
+      "youden_j": 0.6667,
+      "tp": 10,
+      "tn": 2,
+      "fp": 1,
+      "fn": 0,
+      "optimal_range": [
+        21.617,
+        23.4755
+      ],
+      "n_optimal_cuts": 17
+    },
+    "illumination_grid_cv_max": {
+      "threshold": 0.10455560048490767,
+      "sensitivity": 1.0,
+      "specificity": 0.6667,
+      "youden_j": 0.6667,
+      "tp": 10,
+      "tn": 2,
+      "fp": 1,
+      "fn": 0,
+      "optimal_range": [
+        0.1038,
+        0.1053
+      ],
+      "n_optimal_cuts": 17
+    },
+    "fov_retina_fraction_min": {
+      "threshold": 0.7767275810241699,
+      "sensitivity": 1.0,
+      "specificity": 0.6667,
+      "youden_j": 0.6667,
+      "tp": 10,
+      "tn": 2,
+      "fp": 1,
+      "fn": 0,
+      "optimal_range": [
+        0.7764,
+        0.7771
+      ],
+      "n_optimal_cuts": 18
+    }
+  },
+  "combined_gate": {
+    "agreement_with_human": 1.0,
+    "sensitivity_keeps_gradeable": 1.0,
+    "specificity_rejects_ungradeable": 1.0,
+    "tp": 10,
+    "tn": 3,
+    "fp": 0,
+    "fn": 0
+  },
+  "WARNING": "Fitted on SYNTHETIC images. Valid for demo plumbing only. No number derived from this file may appear in the deck. Re-run against human-labelled real fundus images before reporting anything."
+}

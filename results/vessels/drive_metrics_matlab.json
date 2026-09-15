@@ -1,0 +1,133 @@
+{
+  "generated_at": "2026-09-13T13:48:54Z",
+  "implementation": "MATLAB reference (matlab/reference/vessel_reference_drive.m), fibermetric + Otsu, coverage-guarded",
+  "comparison_note": "Compared against DRIVE ground truth using the identical Dice definition as scripts/eval_vessels.py. NOT compared pixelwise against the Python mask: skimage Frangi and MATLAB fibermetric are different algorithms, so mask-vs-mask agreement would be meaningless. Both are scored against the same ground truth.",
+  "n_images": 20,
+  "mean_dice": 0.552275921056164,
+  "mean_sensitivity": 0.50229362034878489,
+  "mean_specificity": 0.95657300694863667,
+  "mean_predicted_coverage": 0.10069801214345528,
+  "mean_truth_coverage": 0.12538292030674833,
+  "per_image": [
+    {
+      "image": "21_training.tif",
+      "dice": 0.595187228225402,
+      "sensitivity": 0.55304345605882654,
+      "specificity": 0.96259024797348181
+    },
+    {
+      "image": "22_training.tif",
+      "dice": 0.58277161572571534,
+      "sensitivity": 0.51727376329562724,
+      "specificity": 0.961164801506335
+    },
+    {
+      "image": "23_training.tif",
+      "dice": 0.49058177245350454,
+      "sensitivity": 0.53861469596558542,
+      "specificity": 0.93113147461351164
+    },
+    {
+      "image": "24_training.tif",
+      "dice": 0.57026082119942,
+      "sensitivity": 0.47276155657658547,
+      "specificity": 0.96271490357875167
+    },
+    {
+      "image": "25_training.tif",
+      "dice": 0.4216695428552093,
+      "sensitivity": 0.3094327628847548,
+      "specificity": 0.97441339919728309
+    },
+    {
+      "image": "26_training.tif",
+      "dice": 0.51221890113273383,
+      "sensitivity": 0.45847446923333063,
+      "specificity": 0.95441956412395024
+    },
+    {
+      "image": "27_training.tif",
+      "dice": 0.5807245867041857,
+      "sensitivity": 0.53627111303594632,
+      "specificity": 0.95459006635935362
+    },
+    {
+      "image": "28_training.tif",
+      "dice": 0.58188160789996246,
+      "sensitivity": 0.5293370958765,
+      "specificity": 0.95220678355330213
+    },
+    {
+      "image": "29_training.tif",
+      "dice": 0.547130916635182,
+      "sensitivity": 0.46862722834109233,
+      "specificity": 0.96613592294231709
+    },
+    {
+      "image": "30_training.tif",
+      "dice": 0.45417191694515968,
+      "sensitivity": 0.35237181511257926,
+      "specificity": 0.97437572374476678
+    },
+    {
+      "image": "31_training.tif",
+      "dice": 0.54015637228937574,
+      "sensitivity": 0.53951233378604591,
+      "specificity": 0.9560778375104112
+    },
+    {
+      "image": "32_training.tif",
+      "dice": 0.59782845011701813,
+      "sensitivity": 0.544780728844966,
+      "specificity": 0.96225458325848889
+    },
+    {
+      "image": "33_training.tif",
+      "dice": 0.57040880062206023,
+      "sensitivity": 0.52809970023839314,
+      "specificity": 0.95713673113581088
+    },
+    {
+      "image": "34_training.tif",
+      "dice": 0.50756081525312291,
+      "sensitivity": 0.50378393119770914,
+      "specificity": 0.919943949911308
+    },
+    {
+      "image": "35_training.tif",
+      "dice": 0.61396054276848977,
+      "sensitivity": 0.58321052284275121,
+      "specificity": 0.95448717644696757
+    },
+    {
+      "image": "36_training.tif",
+      "dice": 0.58775679601577091,
+      "sensitivity": 0.49713468305996544,
+      "specificity": 0.96355662839205525
+    },
+    {
+      "image": "37_training.tif",
+      "dice": 0.576657088855142,
+      "sensitivity": 0.575211691241377,
+      "specificity": 0.93888453446639986
+    },
+    {
+      "image": "38_training.tif",
+      "dice": 0.58181818181818179,
+      "sensitivity": 0.52049066997024562,
+      "specificity": 0.96135102755799651
+    },
+    {
+      "image": "39_training.tif",
+      "dice": 0.54971093147115,
+      "sensitivity": 0.48172455461570013,
+      "specificity": 0.96137212875324818
+    },
+    {
+      "image": "40_training.tif",
+      "dice": 0.58306153213649448,
+      "sensitivity": 0.53571563479771844,
+      "specificity": 0.96265265394699739
+    }
+  ]
+}

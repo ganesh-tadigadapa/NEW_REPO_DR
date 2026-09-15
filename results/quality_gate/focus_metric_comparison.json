@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-09-11T15:08:45.713650+00:00",
+  "labels_file": "data/interim/synthetic/quality_labels.csv",
+  "tag": "synthetic",
+  "n_images": 13,
+  "candidates": {
+    "laplacian_var": {
+      "threshold": 83.6678487034629,
+      "sensitivity": 0.3,
+      "specificity": 1.0,
+      "youden_j": 0.3,
+      "tp": 3,
+      "tn": 3,
+      "fp": 0,
+      "fn": 7,
+      "separation_margin": 0.1582
+    },
+    "laplacian_var_normalised": {
+      "threshold": 3.7110454230099315,
+      "sensitivity": 1.0,
+      "specificity": 0.6667,
+      "youden_j": 0.6667,
+      "tp": 10,
+      "tn": 2,
+      "fp": 1,
+      "fn": 0,
+      "separation_margin": -0.1228
+    },
+    "tenengrad_norm": {
+      "threshold": 21.61700063540579,
+      "sensitivity": 1.0,
+      "specificity": 0.6667,
+      "youden_j": 0.6667,
+      "tp": 10,
+      "tn": 2,
+      "fp": 1,
+      "fn": 0,
+      "separation_margin": 0.6731
+    }
+  },
+  "selected": "tenengrad_norm",
+  "rationale": "Selected on separability (Youden's J) between human-gradeable and human-rejected images. Raw Laplacian variance conflates blur with low retinal texture; contrast-normalisation decouples them. Ties on J are broken by the standardised separation margin between the classes."
+}

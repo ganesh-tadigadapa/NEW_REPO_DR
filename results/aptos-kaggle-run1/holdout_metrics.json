@@ -1,0 +1,92 @@
+{
+  "split": "idrid_holdout",
+  "n": 103,
+  "grade_distribution": [
+    34,
+    5,
+    32,
+    19,
+    13
+  ],
+  "qwk": 0.6934,
+  "exact_accuracy": 0.4078,
+  "within_one_grade": 0.8932,
+  "confusion_matrix": [
+    [
+      7,
+      24,
+      3,
+      0,
+      0
+    ],
+    [
+      2,
+      2,
+      1,
+      0,
+      0
+    ],
+    [
+      2,
+      5,
+      23,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      11,
+      5,
+      1
+    ],
+    [
+      0,
+      0,
+      4,
+      4,
+      5
+    ]
+  ],
+  "referable": {
+    "sensitivity": 0.8594,
+    "specificity": 0.8974,
+    "ppv": 0.9322,
+    "npv": 0.7955,
+    "accuracy": 0.8738,
+    "tp": 55,
+    "tn": 35,
+    "fp": 4,
+    "fn": 9,
+    "auc": 0.9151,
+    "cut": 0.6154985894767017,
+    "sensitivity_ci95": {
+      "lo": 0.7681,
+      "hi": 0.9375,
+      "n_boot": 2000
+    },
+    "specificity_ci95": {
+      "lo": 0.8,
+      "hi": 0.9762,
+      "n_boot": 2000
+    }
+  },
+  "cuts": [
+    0.32,
+    0.6154985894767017,
+    0.9700000000000001,
+    0.61
+  ],
+  "qwk_ci95": {
+    "lo": 0.5921,
+    "hi": 0.7687,
+    "n_boot": 2000
+  },
+  "run_id": "aptos-kaggle-run1",
+  "fingerprint": "b608ec0742b692db",
+  "evaluated_at": "2026-09-13T15:39:34.309179+00:00",
+  "is_repeat_look": false,
+  "n_prior_looks": 0,
+  "protocol": "Thresholds and temperature were frozen on the validation split before this file was created. No tuning followed this evaluation.",
+  "temperature": 0.9879083555589006
+}

@@ -1,0 +1,26 @@
+{
+  "cumulative_cuts": [
+    0.32,
+    0.6154985894767017,
+    0.9700000000000001,
+    0.61
+  ],
+  "referable_cut": 0.6154985894767017,
+  "tuning_status": "target_met",
+  "tuned_on": "validation split only",
+  "target_sensitivity": 0.9,
+  "min_specificity": 0.85,
+  "validation_operating_point": {
+    "cut": 0.6154985894767017,
+    "sensitivity": 0.9238,
+    "specificity": 0.9297,
+    "ppv": 0.8996,
+    "npv": 0.947,
+    "accuracy": 0.9273,
+    "tp": 206,
+    "tn": 304,
+    "fp": 23,
+    "fn": 17
+  },
+  "validation_auc": 0.9753
+}

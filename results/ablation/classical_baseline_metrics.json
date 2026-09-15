@@ -1,0 +1,56 @@
+{
+  "method": "MATLAB classical CV + SVM (control arm)",
+  "n_train": 3112,
+  "n_val": 550,
+  "qwk": 0.53777712211390338,
+  "confusion": [
+    [
+      245,
+      1,
+      25,
+      0,
+      0
+    ],
+    [
+      21,
+      18,
+      17,
+      0,
+      0
+    ],
+    [
+      35,
+      8,
+      105,
+      0,
+      2
+    ],
+    [
+      10,
+      1,
+      18,
+      0,
+      0
+    ],
+    [
+      8,
+      4,
+      31,
+      0,
+      1
+    ]
+  ],
+  "referable_sensitivity": 0.70403587443946192,
+  "referable_specificity": 0.87155963302752293,
+  "feature_names": [
+    "n_exudates",
+    "exudate_area",
+    "n_microaneurysms",
+    "n_haemorrhages",
+    "vessel_density",
+    "mean_green",
+    "std_green",
+    "mean_flattened",
+    "disc_radius"
+  ]
+}

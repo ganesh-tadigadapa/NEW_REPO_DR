@@ -1,0 +1,33 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+
+# data is large + licence-restricted; never committed
+data/raw/**
+data/interim/**
+data/processed/**
+!data/**/.gitkeep
+
+# model weights
+*.keras
+*.h5
+models/
+artifacts/
+
+# node
+web/node_modules/
+web/.next/
+web/out/
+
+# secrets
+kaggle.json
+*-sa-key.json
+service-account*.json
+
+# scratch
+/tmp_*
+
+# the dashboard's currently-published metrics: a pointer to a run, not a result itself
+results/active/

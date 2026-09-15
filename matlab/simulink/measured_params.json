@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-09-11T16:26:06.379668+00:00",
+  "source": "MEASURED: service times from live API traffic; rates from 80 held-out APTOS validation images through the full pipeline (model aptos-kaggle-run1)",
+  "n_scans": 6,
+  "qualityGateSeconds": 0.05,
+  "gradingSeconds": 3.017,
+  "ungradeableRate": 0.0,
+  "reviewSeconds": 18.2,
+  "uploadSeconds": 5.5,
+  "uploadSeconds_basis": "350 kB downscaled JPEG over a 512 kbit/s rural link",
+  "recaptureSeconds": 45.0,
+  "recaptureSeconds_basis": "assumption: health worker repositions and retakes",
+  "referableRate": 0.4,
+  "NOTE": "needsHumanRate (0.725) is MEASURED directly as 'referable OR escalated to clinician', de-duplicated. Do NOT sum referableRate and disagreementRate: an image can be both, and summing gives 1.14 which is impossible. ungradeableRate is 0.0 because the quality thresholds, fitted on 13 synthetic images, refuse essentially no real APTOS image (1 of 550 val, 0 of 400 test). That is a known defect, not a property of the data.",
+  "rates_measured_at": "2026-09-13T15:50:04.983407Z",
+  "rates_n": 80,
+  "needsHumanRate": 0.725,
+  "flag_breakdown": {
+    "agree": 21,
+    "severity_disagreement": 19,
+    "referral_disagreement": 33,
+    "rules_cannot_confirm": 7
+  }
+}

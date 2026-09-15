@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+web/
+matlab/
+notebooks/
+tests/
+docs/
+results/
+.git/
+*.md

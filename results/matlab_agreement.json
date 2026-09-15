@@ -1,0 +1,1685 @@
+{
+  "generated_at": "2026-09-13T13:19:16.223709Z",
+  "what_this_is": "Agreement between the MATLAB reference implementation (matlab/reference/retina_quality_reference.m) and the deployed Python implementation (src/quality/gate.py) on the SAME real images.",
+  "deployment_note": "MATLAB is the reference implementation and is NOT deployed. The live pipeline is Python. MATLAB Compiler and Compiler SDK are not licensed on this installation, and the licence is a trial, so MATLAB cannot legally or technically serve a public endpoint.",
+  "only_valid_comparisons": "Only metrics where BOTH implementations compute the same algorithm are compared. Lesion counts and vessel masks are deliberately excluded: the two stacks use different algorithms there, so an agreement number would be meaningless. Those are measured against ground truth instead (see results/vessels/drive_metrics.json).",
+  "fixed_during_development": [
+    "cv2.Sobel defaults to BORDER_REFLECT_101; conv2(...,'same') zero-pads. On images whose retina touches the frame this changed the focus score by up to 35%. Fixed by explicit reflect-101 padding in the MATLAB reference. Verified to 0.00000000% deviation on identical input arrays."
+  ],
+  "residual_difference_sources": [
+    "Downscale to 1024px: cv2.INTER_AREA vs MATLAB imresize 'box' differ slightly.",
+    "Retina mask closing: 15x15 cv2 MORPH_ELLIPSE vs MATLAB strel('disk',7).",
+    "Both are resampling/morphology differences, not algorithm differences. Gradient-based metrics (focus) are the most sensitive to them."
+  ],
+  "image_source": "/Users/ganesh/Documents/SIH-DR/datasets/APTOS/aptos2019-blindness-detection/train_images",
+  "n_images": 60,
+  "metric_fidelity_isolated": {
+    "what": "MATLAB given the EXACT preprocessed array Python used, so any deviation is attributable to the metric implementation alone.",
+    "interpretation": "This answers 'is the algorithm correctly ported?'. The end_to_end summary answers a different question -- 'do two independent preprocessing stacks produce identical pixels?' -- and they do not, which is expected and is not a porting error.",
+    "results": {
+      "focus_tenengrad_norm": {
+        "n": 30,
+        "mean_rel_deviation_pct": 0.0,
+        "max_rel_deviation_pct": 0.0
+      },
+      "illumination_grid_cv": {
+        "n": 30,
+        "mean_rel_deviation_pct": 0.0,
+        "max_rel_deviation_pct": 0.0
+      }
+    }
+  },
+  "summary_is_end_to_end": "Each implementation does its OWN crop, pad, resize and masking. Differences here include resampling, not just the metric.",
+  "summary": {
+    "focus_tenengrad_norm": {
+      "label": "focus",
+      "n": 60,
+      "mean_rel_deviation_pct": 18.0795,
+      "median_rel_deviation_pct": 18.6853,
+      "max_rel_deviation_pct": 51.2957
+    },
+    "illumination_grid_cv": {
+      "label": "illumination",
+      "n": 60,
+      "mean_rel_deviation_pct": 0.8593,
+      "median_rel_deviation_pct": 0.6623,
+      "max_rel_deviation_pct": 2.4875
+    },
+    "fov_retina_fraction": {
+      "label": "field_of_view",
+      "n": 60,
+      "mean_rel_deviation_pct": 0.083,
+      "median_rel_deviation_pct": 0.0863,
+      "max_rel_deviation_pct": 0.214
+    },
+    "fov_centre_offset": {
+      "label": "fov_centre_offset",
+      "n": 60,
+      "mean_rel_deviation_pct": 19.2409,
+      "median_rel_deviation_pct": 13.542,
+      "max_rel_deviation_pct": 68.6356
+    }
+  },
+  "per_image": [
+    {
+      "image": "ca05f7e7801b.png",
+      "focus_tenengrad_norm": {
+        "python": 215.516396,
+        "matlab": 252.725745,
+        "abs_diff": 37.209349,
+        "rel_pct": 17.2652
+      },
+      "illumination_grid_cv": {
+        "python": 0.100848,
+        "matlab": 0.100418,
+        "abs_diff": 0.00043,
+        "rel_pct": 0.4261
+      },
+      "fov_retina_fraction": {
+        "python": 0.795691,
+        "matlab": 0.794473,
+        "abs_diff": 0.001219,
+        "rel_pct": 0.1532
+      },
+      "fov_centre_offset": {
+        "python": 0.00478,
+        "matlab": 0.006541,
+        "abs_diff": 0.001761,
+        "rel_pct": 36.8384
+      }
+    },
+    {
+      "image": "cd4e7f9fa1a9.png",
+      "focus_tenengrad_norm": {
+        "python": 136.342617,
+        "matlab": 155.922395,
+        "abs_diff": 19.579777,
+        "rel_pct": 14.3607
+      },
+      "illumination_grid_cv": {
+        "python": 0.153812,
+        "matlab": 0.151264,
+        "abs_diff": 0.002547,
+        "rel_pct": 1.6562
+      },
+      "fov_retina_fraction": {
+        "python": 0.693037,
+        "matlab": 0.6921,
+        "abs_diff": 0.000937,
+        "rel_pct": 0.1353
+      },
+      "fov_centre_offset": {
+        "python": 0.025112,
+        "matlab": 0.024564,
+        "abs_diff": 0.000548,
+        "rel_pct": 2.181
+      }
+    },
+    {
+      "image": "7d37a2939f12.png",
+      "focus_tenengrad_norm": {
+        "python": 576.475959,
+        "matlab": 770.171212,
+        "abs_diff": 193.695253,
+        "rel_pct": 33.5999
+      },
+      "illumination_grid_cv": {
+        "python": 0.043767,
+        "matlab": 0.044298,
+        "abs_diff": 0.000531,
+        "rel_pct": 1.213
+      },
+      "fov_retina_fraction": {
+        "python": 0.694448,
+        "matlab": 0.694997,
+        "abs_diff": 0.000549,
+        "rel_pct": 0.0791
+      },
+      "fov_centre_offset": {
+        "python": 0.008512,
+        "matlab": 0.007676,
+        "abs_diff": 0.000836,
+        "rel_pct": 9.817
+      }
+    },
+    {
+      "image": "cb2201c226d6.png",
+      "focus_tenengrad_norm": {
+        "python": 257.306105,
+        "matlab": 312.592288,
+        "abs_diff": 55.286183,
+        "rel_pct": 21.4865
+      },
+      "illumination_grid_cv": {
+        "python": 0.078678,
+        "matlab": 0.078217,
+        "abs_diff": 0.000461,
+        "rel_pct": 0.5855
+      },
+      "fov_retina_fraction": {
+        "python": 0.794392,
+        "matlab": 0.793383,
+        "abs_diff": 0.001009,
+        "rel_pct": 0.127
+      },
+      "fov_centre_offset": {
+        "python": 0.004488,
+        "matlab": 0.006183,
+        "abs_diff": 0.001696,
+        "rel_pct": 37.793
+      }
+    },
+    {
+      "image": "6b128e648646.png",
+      "focus_tenengrad_norm": {
+        "python": 286.806577,
+        "matlab": 372.679113,
+        "abs_diff": 85.872536,
+        "rel_pct": 29.9409
+      },
+      "illumination_grid_cv": {
+        "python": 0.077269,
+        "matlab": 0.076589,
+        "abs_diff": 0.00068,
+        "rel_pct": 0.88
+      },
+      "fov_retina_fraction": {
+        "python": 0.695788,
+        "matlab": 0.696346,
+        "abs_diff": 0.000558,
+        "rel_pct": 0.0802
+      },
+      "fov_centre_offset": {
+        "python": 0.007902,
+        "matlab": 0.007239,
+        "abs_diff": 0.000662,
+        "rel_pct": 8.3833
+      }
+    },
+    {
+      "image": "93be637084a2.png",
+      "focus_tenengrad_norm": {
+        "python": 410.355196,
+        "matlab": 511.678151,
+        "abs_diff": 101.322955,
+        "rel_pct": 24.6915
+      },
+      "illumination_grid_cv": {
+        "python": 0.091151,
+        "matlab": 0.089723,
+        "abs_diff": 0.001428,
+        "rel_pct": 1.5662
+      },
+      "fov_retina_fraction": {
+        "python": 0.682862,
+        "matlab": 0.683453,
+        "abs_diff": 0.00059,
+        "rel_pct": 0.0864
+      },
+      "fov_centre_offset": {
+        "python": 0.004156,
+        "matlab": 0.004214,
+        "abs_diff": 5.8e-05,
+        "rel_pct": 1.394
+      }
+    },
+    {
+      "image": "ad2f0b9d059c.png",
+      "focus_tenengrad_norm": {
+        "python": 169.398007,
+        "matlab": 186.59071,
+        "abs_diff": 17.192703,
+        "rel_pct": 10.1493
+      },
+      "illumination_grid_cv": {
+        "python": 0.110526,
+        "matlab": 0.110096,
+        "abs_diff": 0.00043,
+        "rel_pct": 0.3889
+      },
+      "fov_retina_fraction": {
+        "python": 0.742331,
+        "matlab": 0.742079,
+        "abs_diff": 0.000252,
+        "rel_pct": 0.0339
+      },
+      "fov_centre_offset": {
+        "python": 0.002841,
+        "matlab": 0.004792,
+        "abs_diff": 0.00195,
+        "rel_pct": 68.6356
+      }
+    },
+    {
+      "image": "ffec9a18a3ce.png",
+      "focus_tenengrad_norm": {
+        "python": 44.915895,
+        "matlab": 39.287207,
+        "abs_diff": 5.628688,
+        "rel_pct": 12.5316
+      },
+      "illumination_grid_cv": {
+        "python": 0.224714,
+        "matlab": 0.223693,
+        "abs_diff": 0.001021,
+        "rel_pct": 0.4544
+      },
+      "fov_retina_fraction": {
+        "python": 0.683015,
+        "matlab": 0.682251,
+        "abs_diff": 0.000764,
+        "rel_pct": 0.1118
+      },
+      "fov_centre_offset": {
+        "python": 0.005316,
+        "matlab": 0.006609,
+        "abs_diff": 0.001293,
+        "rel_pct": 24.3299
+      }
+    },
+    {
+      "image": "582115961a3d.png",
+      "focus_tenengrad_norm": {
+        "python": 158.700058,
+        "matlab": 157.861283,
+        "abs_diff": 0.838775,
+        "rel_pct": 0.5285
+      },
+      "illumination_grid_cv": {
+        "python": 0.168735,
+        "matlab": 0.166265,
+        "abs_diff": 0.00247,
+        "rel_pct": 1.4636
+      },
+      "fov_retina_fraction": {
+        "python": 0.684544,
+        "matlab": 0.683891,
+        "abs_diff": 0.000652,
+        "rel_pct": 0.0953
+      },
+      "fov_centre_offset": {
+        "python": 0.00279,
+        "matlab": 0.003307,
+        "abs_diff": 0.000516,
+        "rel_pct": 18.5102
+      }
+    },
+    {
+      "image": "f0098e9d4aee.png",
+      "focus_tenengrad_norm": {
+        "python": 458.99437,
+        "matlab": 480.742352,
+        "abs_diff": 21.747982,
+        "rel_pct": 4.7382
+      },
+      "illumination_grid_cv": {
+        "python": 0.080942,
+        "matlab": 0.079642,
+        "abs_diff": 0.0013,
+        "rel_pct": 1.6057
+      },
+      "fov_retina_fraction": {
+        "python": 0.683606,
+        "matlab": 0.683595,
+        "abs_diff": 1.1e-05,
+        "rel_pct": 0.0017
+      },
+      "fov_centre_offset": {
+        "python": 0.004202,
+        "matlab": 0.003675,
+        "abs_diff": 0.000528,
+        "rel_pct": 12.5581
+      }
+    },
+    {
+      "image": "4c3c1ed09771.png",
+      "focus_tenengrad_norm": {
+        "python": 494.125875,
+        "matlab": 610.259894,
+        "abs_diff": 116.13402,
+        "rel_pct": 23.5029
+      },
+      "illumination_grid_cv": {
+        "python": 0.071597,
+        "matlab": 0.071883,
+        "abs_diff": 0.000286,
+        "rel_pct": 0.3993
+      },
+      "fov_retina_fraction": {
+        "python": 0.682829,
+        "matlab": 0.683411,
+        "abs_diff": 0.000582,
+        "rel_pct": 0.0852
+      },
+      "fov_centre_offset": {
+        "python": 0.005848,
+        "matlab": 0.005469,
+        "abs_diff": 0.000378,
+        "rel_pct": 6.4725
+      }
+    },
+    {
+      "image": "a1edf0e66592.png",
+      "focus_tenengrad_norm": {
+        "python": 165.551161,
+        "matlab": 201.911052,
+        "abs_diff": 36.359891,
+        "rel_pct": 21.9629
+      },
+      "illumination_grid_cv": {
+        "python": 0.117895,
+        "matlab": 0.117546,
+        "abs_diff": 0.000349,
+        "rel_pct": 0.296
+      },
+      "fov_retina_fraction": {
+        "python": 0.793509,
+        "matlab": 0.792128,
+        "abs_diff": 0.001381,
+        "rel_pct": 0.174
+      },
+      "fov_centre_offset": {
+        "python": 0.004417,
+        "matlab": 0.006093,
+        "abs_diff": 0.001676,
+        "rel_pct": 37.9399
+      }
+    },
+    {
+      "image": "a85cda5f725d.png",
+      "focus_tenengrad_norm": {
+        "python": 250.443704,
+        "matlab": 302.334055,
+        "abs_diff": 51.890351,
+        "rel_pct": 20.7194
+      },
+      "illumination_grid_cv": {
+        "python": 0.070234,
+        "matlab": 0.070209,
+        "abs_diff": 2.5e-05,
+        "rel_pct": 0.0356
+      },
+      "fov_retina_fraction": {
+        "python": 0.794351,
+        "matlab": 0.793153,
+        "abs_diff": 0.001198,
+        "rel_pct": 0.1508
+      },
+      "fov_centre_offset": {
+        "python": 0.004737,
+        "matlab": 0.006409,
+        "abs_diff": 0.001672,
+        "rel_pct": 35.299
+      }
+    },
+    {
+      "image": "22a6da005395.png",
+      "focus_tenengrad_norm": {
+        "python": 473.077998,
+        "matlab": 629.765217,
+        "abs_diff": 156.687219,
+        "rel_pct": 33.1208
+      },
+      "illumination_grid_cv": {
+        "python": 0.078132,
+        "matlab": 0.076662,
+        "abs_diff": 0.001471,
+        "rel_pct": 1.8821
+      },
+      "fov_retina_fraction": {
+        "python": 0.683167,
+        "matlab": 0.683761,
+        "abs_diff": 0.000593,
+        "rel_pct": 0.0868
+      },
+      "fov_centre_offset": {
+        "python": 0.005209,
+        "matlab": 0.004836,
+        "abs_diff": 0.000373,
+        "rel_pct": 7.1632
+      }
+    },
+    {
+      "image": "23148a40ecb0.png",
+      "focus_tenengrad_norm": {
+        "python": 333.52077,
+        "matlab": 327.19646,
+        "abs_diff": 6.32431,
+        "rel_pct": 1.8962
+      },
+      "illumination_grid_cv": {
+        "python": 0.103701,
+        "matlab": 0.101344,
+        "abs_diff": 0.002357,
+        "rel_pct": 2.2732
+      },
+      "fov_retina_fraction": {
+        "python": 0.684322,
+        "matlab": 0.683683,
+        "abs_diff": 0.000639,
+        "rel_pct": 0.0934
+      },
+      "fov_centre_offset": {
+        "python": 0.00628,
+        "matlab": 0.005866,
+        "abs_diff": 0.000415,
+        "rel_pct": 6.6011
+      }
+    },
+    {
+      "image": "f762c272c522.png",
+      "focus_tenengrad_norm": {
+        "python": 386.906908,
+        "matlab": 476.091582,
+        "abs_diff": 89.184673,
+        "rel_pct": 23.0507
+      },
+      "illumination_grid_cv": {
+        "python": 0.062537,
+        "matlab": 0.06195,
+        "abs_diff": 0.000587,
+        "rel_pct": 0.9385
+      },
+      "fov_retina_fraction": {
+        "python": 0.71981,
+        "matlab": 0.720251,
+        "abs_diff": 0.000441,
+        "rel_pct": 0.0612
+      },
+      "fov_centre_offset": {
+        "python": 0.010418,
+        "matlab": 0.009823,
+        "abs_diff": 0.000595,
+        "rel_pct": 5.7076
+      }
+    },
+    {
+      "image": "32ed318235b8.png",
+      "focus_tenengrad_norm": {
+        "python": 137.009332,
+        "matlab": 161.99914,
+        "abs_diff": 24.989808,
+        "rel_pct": 18.2395
+      },
+      "illumination_grid_cv": {
+        "python": 0.119193,
+        "matlab": 0.118271,
+        "abs_diff": 0.000922,
+        "rel_pct": 0.7735
+      },
+      "fov_retina_fraction": {
+        "python": 0.793758,
+        "matlab": 0.792468,
+        "abs_diff": 0.00129,
+        "rel_pct": 0.1626
+      },
+      "fov_centre_offset": {
+        "python": 0.003955,
+        "matlab": 0.005725,
+        "abs_diff": 0.00177,
+        "rel_pct": 44.7546
+      }
+    },
+    {
+      "image": "2d9d97a6e713.png",
+      "focus_tenengrad_norm": {
+        "python": 444.266469,
+        "matlab": 596.115302,
+        "abs_diff": 151.848833,
+        "rel_pct": 34.1797
+      },
+      "illumination_grid_cv": {
+        "python": 0.096283,
+        "matlab": 0.095274,
+        "abs_diff": 0.001009,
+        "rel_pct": 1.0476
+      },
+      "fov_retina_fraction": {
+        "python": 0.682655,
+        "matlab": 0.68327,
+        "abs_diff": 0.000614,
+        "rel_pct": 0.09
+      },
+      "fov_centre_offset": {
+        "python": 0.004154,
+        "matlab": 0.004005,
+        "abs_diff": 0.000149,
+        "rel_pct": 3.5799
+      }
+    },
+    {
+      "image": "8fd7ad26e691.png",
+      "focus_tenengrad_norm": {
+        "python": 253.52272,
+        "matlab": 292.9228,
+        "abs_diff": 39.40008,
+        "rel_pct": 15.541
+      },
+      "illumination_grid_cv": {
+        "python": 0.089812,
+        "matlab": 0.088142,
+        "abs_diff": 0.00167,
+        "rel_pct": 1.859
+      },
+      "fov_retina_fraction": {
+        "python": 0.697134,
+        "matlab": 0.697155,
+        "abs_diff": 2.1e-05,
+        "rel_pct": 0.003
+      },
+      "fov_centre_offset": {
+        "python": 0.008721,
+        "matlab": 0.008695,
+        "abs_diff": 2.6e-05,
+        "rel_pct": 0.3008
+      }
+    },
+    {
+      "image": "4d167ca69ea8.png",
+      "focus_tenengrad_norm": {
+        "python": 295.591667,
+        "matlab": 347.429619,
+        "abs_diff": 51.837952,
+        "rel_pct": 17.537
+      },
+      "illumination_grid_cv": {
+        "python": 0.071421,
+        "matlab": 0.071969,
+        "abs_diff": 0.000548,
+        "rel_pct": 0.768
+      },
+      "fov_retina_fraction": {
+        "python": 0.796724,
+        "matlab": 0.795687,
+        "abs_diff": 0.001038,
+        "rel_pct": 0.1302
+      },
+      "fov_centre_offset": {
+        "python": 0.005038,
+        "matlab": 0.006677,
+        "abs_diff": 0.001639,
+        "rel_pct": 32.5238
+      }
+    },
+    {
+      "image": "6cbc3dad809c.png",
+      "focus_tenengrad_norm": {
+        "python": 316.271178,
+        "matlab": 312.23849,
+        "abs_diff": 4.032688,
+        "rel_pct": 1.2751
+      },
+      "illumination_grid_cv": {
+        "python": 0.086568,
+        "matlab": 0.085017,
+        "abs_diff": 0.001551,
+        "rel_pct": 1.7914
+      },
+      "fov_retina_fraction": {
+        "python": 0.697178,
+        "matlab": 0.696538,
+        "abs_diff": 0.00064,
+        "rel_pct": 0.0918
+      },
+      "fov_centre_offset": {
+        "python": 0.007762,
+        "matlab": 0.007014,
+        "abs_diff": 0.000748,
+        "rel_pct": 9.6318
+      }
+    },
+    {
+      "image": "0f882877bf13.png",
+      "focus_tenengrad_norm": {
+        "python": 39.597688,
+        "matlab": 41.55729,
+        "abs_diff": 1.959602,
+        "rel_pct": 4.9488
+      },
+      "illumination_grid_cv": {
+        "python": 0.291592,
+        "matlab": 0.289966,
+        "abs_diff": 0.001627,
+        "rel_pct": 0.5579
+      },
+      "fov_retina_fraction": {
+        "python": 0.706825,
+        "matlab": 0.706381,
+        "abs_diff": 0.000444,
+        "rel_pct": 0.0629
+      },
+      "fov_centre_offset": {
+        "python": 0.00555,
+        "matlab": 0.004748,
+        "abs_diff": 0.000802,
+        "rel_pct": 14.4564
+      }
+    },
+    {
+      "image": "7350c50667c5.png",
+      "focus_tenengrad_norm": {
+        "python": 505.347196,
+        "matlab": 627.776313,
+        "abs_diff": 122.429117,
+        "rel_pct": 24.2267
+      },
+      "illumination_grid_cv": {
+        "python": 0.0798,
+        "matlab": 0.079562,
+        "abs_diff": 0.000237,
+        "rel_pct": 0.2973
+      },
+      "fov_retina_fraction": {
+        "python": 0.68274,
+        "matlab": 0.683354,
+        "abs_diff": 0.000614,
+        "rel_pct": 0.09
+      },
+      "fov_centre_offset": {
+        "python": 0.004485,
+        "matlab": 0.004407,
+        "abs_diff": 7.8e-05,
+        "rel_pct": 1.7477
+      }
+    },
+    {
+      "image": "a81b06f50612.png",
+      "focus_tenengrad_norm": {
+        "python": 31.789781,
+        "matlab": 48.096577,
+        "abs_diff": 16.306795,
+        "rel_pct": 51.2957
+      },
+      "illumination_grid_cv": {
+        "python": 0.364646,
+        "matlab": 0.362861,
+        "abs_diff": 0.001785,
+        "rel_pct": 0.4895
+      },
+      "fov_retina_fraction": {
+        "python": 0.673743,
+        "matlab": 0.674068,
+        "abs_diff": 0.000325,
+        "rel_pct": 0.0483
+      },
+      "fov_centre_offset": {
+        "python": 0.035186,
+        "matlab": 0.0347,
+        "abs_diff": 0.000486,
+        "rel_pct": 1.3822
+      }
+    },
+    {
+      "image": "4a4cb731f91a.png",
+      "focus_tenengrad_norm": {
+        "python": 127.431649,
+        "matlab": 139.915169,
+        "abs_diff": 12.483519,
+        "rel_pct": 9.7962
+      },
+      "illumination_grid_cv": {
+        "python": 0.180973,
+        "matlab": 0.181555,
+        "abs_diff": 0.000582,
+        "rel_pct": 0.3215
+      },
+      "fov_retina_fraction": {
+        "python": 0.639803,
+        "matlab": 0.639772,
+        "abs_diff": 3.1e-05,
+        "rel_pct": 0.0048
+      },
+      "fov_centre_offset": {
+        "python": 0.097103,
+        "matlab": 0.098212,
+        "abs_diff": 0.001109,
+        "rel_pct": 1.1423
+      }
+    },
+    {
+      "image": "94dcb491143f.png",
+      "focus_tenengrad_norm": {
+        "python": 263.564907,
+        "matlab": 287.60196,
+        "abs_diff": 24.037053,
+        "rel_pct": 9.12
+      },
+      "illumination_grid_cv": {
+        "python": 0.125412,
+        "matlab": 0.124474,
+        "abs_diff": 0.000938,
+        "rel_pct": 0.7477
+      },
+      "fov_retina_fraction": {
+        "python": 0.720183,
+        "matlab": 0.720012,
+        "abs_diff": 0.000172,
+        "rel_pct": 0.0238
+      },
+      "fov_centre_offset": {
+        "python": 0.015423,
+        "matlab": 0.014119,
+        "abs_diff": 0.001304,
+        "rel_pct": 8.4569
+      }
+    },
+    {
+      "image": "b13d72ceea26.png",
+      "focus_tenengrad_norm": {
+        "python": 243.285469,
+        "matlab": 287.714053,
+        "abs_diff": 44.428584,
+        "rel_pct": 18.2619
+      },
+      "illumination_grid_cv": {
+        "python": 0.100774,
+        "matlab": 0.100673,
+        "abs_diff": 0.000101,
+        "rel_pct": 0.1
+      },
+      "fov_retina_fraction": {
+        "python": 0.672184,
+        "matlab": 0.671885,
+        "abs_diff": 0.000299,
+        "rel_pct": 0.0444
+      },
+      "fov_centre_offset": {
+        "python": 0.032026,
+        "matlab": 0.030632,
+        "abs_diff": 0.001394,
+        "rel_pct": 4.3522
+      }
+    },
+    {
+      "image": "06586082a24d.png",
+      "focus_tenengrad_norm": {
+        "python": 266.629249,
+        "matlab": 302.707448,
+        "abs_diff": 36.078199,
+        "rel_pct": 13.5312
+      },
+      "illumination_grid_cv": {
+        "python": 0.06676,
+        "matlab": 0.06577,
+        "abs_diff": 0.00099,
+        "rel_pct": 1.4832
+      },
+      "fov_retina_fraction": {
+        "python": 0.640927,
+        "matlab": 0.640945,
+        "abs_diff": 1.8e-05,
+        "rel_pct": 0.0028
+      },
+      "fov_centre_offset": {
+        "python": 0.097411,
+        "matlab": 0.098495,
+        "abs_diff": 0.001084,
+        "rel_pct": 1.1127
+      }
+    },
+    {
+      "image": "b89938407ee6.png",
+      "focus_tenengrad_norm": {
+        "python": 39.414107,
+        "matlab": 34.816229,
+        "abs_diff": 4.597878,
+        "rel_pct": 11.6656
+      },
+      "illumination_grid_cv": {
+        "python": 0.305938,
+        "matlab": 0.305292,
+        "abs_diff": 0.000646,
+        "rel_pct": 0.2111
+      },
+      "fov_retina_fraction": {
+        "python": 0.685363,
+        "matlab": 0.684628,
+        "abs_diff": 0.000734,
+        "rel_pct": 0.1071
+      },
+      "fov_centre_offset": {
+        "python": 0.005226,
+        "matlab": 0.006558,
+        "abs_diff": 0.001332,
+        "rel_pct": 25.4938
+      }
+    },
+    {
+      "image": "6af071b0ac6e.png",
+      "focus_tenengrad_norm": {
+        "python": 63.203508,
+        "matlab": 50.783392,
+        "abs_diff": 12.420117,
+        "rel_pct": 19.651
+      },
+      "illumination_grid_cv": {
+        "python": 0.341057,
+        "matlab": 0.341125,
+        "abs_diff": 6.8e-05,
+        "rel_pct": 0.02
+      },
+      "fov_retina_fraction": {
+        "python": 0.685798,
+        "matlab": 0.685036,
+        "abs_diff": 0.000762,
+        "rel_pct": 0.1111
+      },
+      "fov_centre_offset": {
+        "python": 0.004791,
+        "matlab": 0.006057,
+        "abs_diff": 0.001266,
+        "rel_pct": 26.4278
+      }
+    },
+    {
+      "image": "408ea9d5e082.png",
+      "focus_tenengrad_norm": {
+        "python": 112.657449,
+        "matlab": 153.007372,
+        "abs_diff": 40.349923,
+        "rel_pct": 35.8165
+      },
+      "illumination_grid_cv": {
+        "python": 0.185232,
+        "matlab": 0.183984,
+        "abs_diff": 0.001248,
+        "rel_pct": 0.6739
+      },
+      "fov_retina_fraction": {
+        "python": 0.719402,
+        "matlab": 0.719856,
+        "abs_diff": 0.000454,
+        "rel_pct": 0.0631
+      },
+      "fov_centre_offset": {
+        "python": 0.012305,
+        "matlab": 0.011655,
+        "abs_diff": 0.00065,
+        "rel_pct": 5.2794
+      }
+    },
+    {
+      "image": "4e231670b48c.png",
+      "focus_tenengrad_norm": {
+        "python": 155.871888,
+        "matlab": 191.03598,
+        "abs_diff": 35.164091,
+        "rel_pct": 22.5596
+      },
+      "illumination_grid_cv": {
+        "python": 0.140654,
+        "matlab": 0.139915,
+        "abs_diff": 0.00074,
+        "rel_pct": 0.5258
+      },
+      "fov_retina_fraction": {
+        "python": 0.794581,
+        "matlab": 0.79336,
+        "abs_diff": 0.001222,
+        "rel_pct": 0.1537
+      },
+      "fov_centre_offset": {
+        "python": 0.004116,
+        "matlab": 0.005801,
+        "abs_diff": 0.001685,
+        "rel_pct": 40.9274
+      }
+    },
+    {
+      "image": "7fc3a8bb40de.png",
+      "focus_tenengrad_norm": {
+        "python": 166.691381,
+        "matlab": 199.745788,
+        "abs_diff": 33.054408,
+        "rel_pct": 19.8297
+      },
+      "illumination_grid_cv": {
+        "python": 0.109352,
+        "matlab": 0.109643,
+        "abs_diff": 0.00029,
+        "rel_pct": 0.2656
+      },
+      "fov_retina_fraction": {
+        "python": 0.794954,
+        "matlab": 0.79385,
+        "abs_diff": 0.001104,
+        "rel_pct": 0.1389
+      },
+      "fov_centre_offset": {
+        "python": 0.005054,
+        "matlab": 0.006733,
+        "abs_diff": 0.001679,
+        "rel_pct": 33.2302
+      }
+    },
+    {
+      "image": "2a2274bcb00a.png",
+      "focus_tenengrad_norm": {
+        "python": 254.795251,
+        "matlab": 222.234989,
+        "abs_diff": 32.560262,
+        "rel_pct": 12.779
+      },
+      "illumination_grid_cv": {
+        "python": 0.096138,
+        "matlab": 0.096568,
+        "abs_diff": 0.000431,
+        "rel_pct": 0.4479
+      },
+      "fov_retina_fraction": {
+        "python": 0.685951,
+        "matlab": 0.6852,
+        "abs_diff": 0.000751,
+        "rel_pct": 0.1096
+      },
+      "fov_centre_offset": {
+        "python": 0.004759,
+        "matlab": 0.005943,
+        "abs_diff": 0.001184,
+        "rel_pct": 24.8896
+      }
+    },
+    {
+      "image": "475c7ded0f7a.png",
+      "focus_tenengrad_norm": {
+        "python": 456.403591,
+        "matlab": 587.33927,
+        "abs_diff": 130.935678,
+        "rel_pct": 28.6886
+      },
+      "illumination_grid_cv": {
+        "python": 0.078435,
+        "matlab": 0.077094,
+        "abs_diff": 0.001341,
+        "rel_pct": 1.7099
+      },
+      "fov_retina_fraction": {
+        "python": 0.704103,
+        "matlab": 0.704624,
+        "abs_diff": 0.000521,
+        "rel_pct": 0.074
+      },
+      "fov_centre_offset": {
+        "python": 0.018346,
+        "matlab": 0.017184,
+        "abs_diff": 0.001162,
+        "rel_pct": 6.3342
+      }
+    },
+    {
+      "image": "8e63fc4ab532.png",
+      "focus_tenengrad_norm": {
+        "python": 328.218162,
+        "matlab": 354.746721,
+        "abs_diff": 26.528559,
+        "rel_pct": 8.0826
+      },
+      "illumination_grid_cv": {
+        "python": 0.085441,
+        "matlab": 0.08422,
+        "abs_diff": 0.001221,
+        "rel_pct": 1.4291
+      },
+      "fov_retina_fraction": {
+        "python": 0.696475,
+        "matlab": 0.696395,
+        "abs_diff": 8e-05,
+        "rel_pct": 0.0115
+      },
+      "fov_centre_offset": {
+        "python": 0.009074,
+        "matlab": 0.007611,
+        "abs_diff": 0.001463,
+        "rel_pct": 16.1274
+      }
+    },
+    {
+      "image": "996f57c86ba5.png",
+      "focus_tenengrad_norm": {
+        "python": 483.18359,
+        "matlab": 538.762455,
+        "abs_diff": 55.578866,
+        "rel_pct": 11.5026
+      },
+      "illumination_grid_cv": {
+        "python": 0.067579,
+        "matlab": 0.067973,
+        "abs_diff": 0.000394,
+        "rel_pct": 0.5828
+      },
+      "fov_retina_fraction": {
+        "python": 0.695429,
+        "matlab": 0.69539,
+        "abs_diff": 3.9e-05,
+        "rel_pct": 0.0056
+      },
+      "fov_centre_offset": {
+        "python": 0.007217,
+        "matlab": 0.005846,
+        "abs_diff": 0.001371,
+        "rel_pct": 18.995
+      }
+    },
+    {
+      "image": "8d7bb0649a02.png",
+      "focus_tenengrad_norm": {
+        "python": 260.328262,
+        "matlab": 275.192074,
+        "abs_diff": 14.863812,
+        "rel_pct": 5.7096
+      },
+      "illumination_grid_cv": {
+        "python": 0.071915,
+        "matlab": 0.070705,
+        "abs_diff": 0.00121,
+        "rel_pct": 1.6822
+      },
+      "fov_retina_fraction": {
+        "python": 0.695518,
+        "matlab": 0.695483,
+        "abs_diff": 3.5e-05,
+        "rel_pct": 0.0051
+      },
+      "fov_centre_offset": {
+        "python": 0.007094,
+        "matlab": 0.00575,
+        "abs_diff": 0.001345,
+        "rel_pct": 18.9564
+      }
+    },
+    {
+      "image": "ab724603ee93.png",
+      "focus_tenengrad_norm": {
+        "python": 93.04808,
+        "matlab": 116.925043,
+        "abs_diff": 23.876963,
+        "rel_pct": 25.6609
+      },
+      "illumination_grid_cv": {
+        "python": 0.222876,
+        "matlab": 0.220887,
+        "abs_diff": 0.00199,
+        "rel_pct": 0.8928
+      },
+      "fov_retina_fraction": {
+        "python": 0.639869,
+        "matlab": 0.639925,
+        "abs_diff": 5.6e-05,
+        "rel_pct": 0.0088
+      },
+      "fov_centre_offset": {
+        "python": 0.097429,
+        "matlab": 0.098509,
+        "abs_diff": 0.00108,
+        "rel_pct": 1.1087
+      }
+    },
+    {
+      "image": "bdf47b9f10c4.png",
+      "focus_tenengrad_norm": {
+        "python": 187.397852,
+        "matlab": 223.565224,
+        "abs_diff": 36.167372,
+        "rel_pct": 19.2998
+      },
+      "illumination_grid_cv": {
+        "python": 0.09414,
+        "matlab": 0.094781,
+        "abs_diff": 0.000641,
+        "rel_pct": 0.6809
+      },
+      "fov_retina_fraction": {
+        "python": 0.795198,
+        "matlab": 0.794092,
+        "abs_diff": 0.001106,
+        "rel_pct": 0.1391
+      },
+      "fov_centre_offset": {
+        "python": 0.004799,
+        "matlab": 0.00652,
+        "abs_diff": 0.001721,
+        "rel_pct": 35.8573
+      }
+    },
+    {
+      "image": "8bbd7835e9aa.png",
+      "focus_tenengrad_norm": {
+        "python": 114.652326,
+        "matlab": 150.300502,
+        "abs_diff": 35.648176,
+        "rel_pct": 31.0924
+      },
+      "illumination_grid_cv": {
+        "python": 0.204177,
+        "matlab": 0.202313,
+        "abs_diff": 0.001864,
+        "rel_pct": 0.913
+      },
+      "fov_retina_fraction": {
+        "python": 0.668923,
+        "matlab": 0.669513,
+        "abs_diff": 0.000589,
+        "rel_pct": 0.0881
+      },
+      "fov_centre_offset": {
+        "python": 0.01333,
+        "matlab": 0.01421,
+        "abs_diff": 0.00088,
+        "rel_pct": 6.6013
+      }
+    },
+    {
+      "image": "ca7570c5925c.png",
+      "focus_tenengrad_norm": {
+        "python": 347.593655,
+        "matlab": 362.575345,
+        "abs_diff": 14.98169,
+        "rel_pct": 4.3101
+      },
+      "illumination_grid_cv": {
+        "python": 0.104147,
+        "matlab": 0.102977,
+        "abs_diff": 0.001169,
+        "rel_pct": 1.1228
+      },
+      "fov_retina_fraction": {
+        "python": 0.6837,
+        "matlab": 0.68367,
+        "abs_diff": 3e-05,
+        "rel_pct": 0.0043
+      },
+      "fov_centre_offset": {
+        "python": 0.005049,
+        "matlab": 0.0042,
+        "abs_diff": 0.000849,
+        "rel_pct": 16.823
+      }
+    },
+    {
+      "image": "f1d719c97838.png",
+      "focus_tenengrad_norm": {
+        "python": 144.320762,
+        "matlab": 175.50919,
+        "abs_diff": 31.188428,
+        "rel_pct": 21.6105
+      },
+      "illumination_grid_cv": {
+        "python": 0.116063,
+        "matlab": 0.11614,
+        "abs_diff": 7.7e-05,
+        "rel_pct": 0.0668
+      },
+      "fov_retina_fraction": {
+        "python": 0.794949,
+        "matlab": 0.793714,
+        "abs_diff": 0.001235,
+        "rel_pct": 0.1554
+      },
+      "fov_centre_offset": {
+        "python": 0.004499,
+        "matlab": 0.006139,
+        "abs_diff": 0.00164,
+        "rel_pct": 36.4481
+      }
+    },
+    {
+      "image": "7d3835e4e63a.png",
+      "focus_tenengrad_norm": {
+        "python": 460.717294,
+        "matlab": 493.075774,
+        "abs_diff": 32.35848,
+        "rel_pct": 7.0235
+      },
+      "illumination_grid_cv": {
+        "python": 0.066048,
+        "matlab": 0.067691,
+        "abs_diff": 0.001643,
+        "rel_pct": 2.4875
+      },
+      "fov_retina_fraction": {
+        "python": 0.697426,
+        "matlab": 0.697413,
+        "abs_diff": 1.2e-05,
+        "rel_pct": 0.0018
+      },
+      "fov_centre_offset": {
+        "python": 0.007344,
+        "matlab": 0.007381,
+        "abs_diff": 3.7e-05,
+        "rel_pct": 0.5032
+      }
+    },
+    {
+      "image": "02358b47ea89.png",
+      "focus_tenengrad_norm": {
+        "python": 40.004062,
+        "matlab": 32.673634,
+        "abs_diff": 7.330429,
+        "rel_pct": 18.3242
+      },
+      "illumination_grid_cv": {
+        "python": 0.265009,
+        "matlab": 0.263766,
+        "abs_diff": 0.001244,
+        "rel_pct": 0.4692
+      },
+      "fov_retina_fraction": {
+        "python": 0.756616,
+        "matlab": 0.755346,
+        "abs_diff": 0.001269,
+        "rel_pct": 0.1678
+      },
+      "fov_centre_offset": {
+        "python": 0.00118,
+        "matlab": 0.001341,
+        "abs_diff": 0.000161,
+        "rel_pct": 13.6351
+      }
+    },
+    {
+      "image": "4d1e7def7624.png",
+      "focus_tenengrad_norm": {
+        "python": 36.914562,
+        "matlab": 34.982416,
+        "abs_diff": 1.932146,
+        "rel_pct": 5.2341
+      },
+      "illumination_grid_cv": {
+        "python": 0.390387,
+        "matlab": 0.387847,
+        "abs_diff": 0.00254,
+        "rel_pct": 0.6507
+      },
+      "fov_retina_fraction": {
+        "python": 0.751709,
+        "matlab": 0.7501,
+        "abs_diff": 0.001609,
+        "rel_pct": 0.214
+      },
+      "fov_centre_offset": {
+        "python": 0.004585,
+        "matlab": 0.006521,
+        "abs_diff": 0.001936,
+        "rel_pct": 42.2265
+      }
+    },
+    {
+      "image": "fd079d2e93a2.png",
+      "focus_tenengrad_norm": {
+        "python": 177.334504,
+        "matlab": 214.839058,
+        "abs_diff": 37.504554,
+        "rel_pct": 21.149
+      },
+      "illumination_grid_cv": {
+        "python": 0.109084,
+        "matlab": 0.108404,
+        "abs_diff": 0.00068,
+        "rel_pct": 0.6233
+      },
+      "fov_retina_fraction": {
+        "python": 0.794552,
+        "matlab": 0.793324,
+        "abs_diff": 0.001228,
+        "rel_pct": 0.1546
+      },
+      "fov_centre_offset": {
+        "python": 0.004515,
+        "matlab": 0.006076,
+        "abs_diff": 0.001561,
+        "rel_pct": 34.5833
+      }
+    },
+    {
+      "image": "cbc2e57447c2.png",
+      "focus_tenengrad_norm": {
+        "python": 397.349568,
+        "matlab": 525.469047,
+        "abs_diff": 128.119479,
+        "rel_pct": 32.2435
+      },
+      "illumination_grid_cv": {
+        "python": 0.080531,
+        "matlab": 0.08137,
+        "abs_diff": 0.000839,
+        "rel_pct": 1.0415
+      },
+      "fov_retina_fraction": {
+        "python": 0.695188,
+        "matlab": 0.695786,
+        "abs_diff": 0.000599,
+        "rel_pct": 0.0862
+      },
+      "fov_centre_offset": {
+        "python": 0.0057,
+        "matlab": 0.004933,
+        "abs_diff": 0.000767,
+        "rel_pct": 13.4489
+      }
+    },
+    {
+      "image": "0eb52045349f.png",
+      "focus_tenengrad_norm": {
+        "python": 249.827281,
+        "matlab": 311.707386,
+        "abs_diff": 61.880105,
+        "rel_pct": 24.7692
+      },
+      "illumination_grid_cv": {
+        "python": 0.136216,
+        "matlab": 0.135545,
+        "abs_diff": 0.000671,
+        "rel_pct": 0.4927
+      },
+      "fov_retina_fraction": {
+        "python": 0.671536,
+        "matlab": 0.671943,
+        "abs_diff": 0.000406,
+        "rel_pct": 0.0605
+      },
+      "fov_centre_offset": {
+        "python": 0.027672,
+        "matlab": 0.027078,
+        "abs_diff": 0.000594,
+        "rel_pct": 2.1479
+      }
+    },
+    {
+      "image": "7ccf9d25dc48.png",
+      "focus_tenengrad_norm": {
+        "python": 150.100722,
+        "matlab": 182.125551,
+        "abs_diff": 32.024829,
+        "rel_pct": 21.3356
+      },
+      "illumination_grid_cv": {
+        "python": 0.12696,
+        "matlab": 0.127587,
+        "abs_diff": 0.000627,
+        "rel_pct": 0.4939
+      },
+      "fov_retina_fraction": {
+        "python": 0.79464,
+        "matlab": 0.793211,
+        "abs_diff": 0.001429,
+        "rel_pct": 0.1798
+      },
+      "fov_centre_offset": {
+        "python": 0.005422,
+        "matlab": 0.007115,
+        "abs_diff": 0.001693,
+        "rel_pct": 31.2253
+      }
+    },
+    {
+      "image": "86d6808f0609.png",
+      "focus_tenengrad_norm": {
+        "python": 192.235548,
+        "matlab": 219.482122,
+        "abs_diff": 27.246574,
+        "rel_pct": 14.1735
+      },
+      "illumination_grid_cv": {
+        "python": 0.161302,
+        "matlab": 0.158735,
+        "abs_diff": 0.002567,
+        "rel_pct": 1.5915
+      },
+      "fov_retina_fraction": {
+        "python": 0.684683,
+        "matlab": 0.684649,
+        "abs_diff": 3.3e-05,
+        "rel_pct": 0.0049
+      },
+      "fov_centre_offset": {
+        "python": 0.004825,
+        "matlab": 0.005083,
+        "abs_diff": 0.000258,
+        "rel_pct": 5.344
+      }
+    },
+    {
+      "image": "75a071608ea6.png",
+      "focus_tenengrad_norm": {
+        "python": 225.616794,
+        "matlab": 273.892512,
+        "abs_diff": 48.275718,
+        "rel_pct": 21.3972
+      },
+      "illumination_grid_cv": {
+        "python": 0.073633,
+        "matlab": 0.073789,
+        "abs_diff": 0.000156,
+        "rel_pct": 0.2118
+      },
+      "fov_retina_fraction": {
+        "python": 0.794354,
+        "matlab": 0.793118,
+        "abs_diff": 0.001236,
+        "rel_pct": 0.1556
+      },
+      "fov_centre_offset": {
+        "python": 0.00446,
+        "matlab": 0.006161,
+        "abs_diff": 0.001701,
+        "rel_pct": 38.1419
+      }
+    },
+    {
+      "image": "211518c46162.png",
+      "focus_tenengrad_norm": {
+        "python": 566.598936,
+        "matlab": 630.499161,
+        "abs_diff": 63.900224,
+        "rel_pct": 11.2779
+      },
+      "illumination_grid_cv": {
+        "python": 0.07325,
+        "matlab": 0.072068,
+        "abs_diff": 0.001182,
+        "rel_pct": 1.614
+      },
+      "fov_retina_fraction": {
+        "python": 0.722143,
+        "matlab": 0.72188,
+        "abs_diff": 0.000263,
+        "rel_pct": 0.0364
+      },
+      "fov_centre_offset": {
+        "python": 0.015916,
+        "matlab": 0.014885,
+        "abs_diff": 0.00103,
+        "rel_pct": 6.473
+      }
+    },
+    {
+      "image": "3aa2b1ce6700.png",
+      "focus_tenengrad_norm": {
+        "python": 114.523567,
+        "matlab": 137.571128,
+        "abs_diff": 23.047561,
+        "rel_pct": 20.1247
+      },
+      "illumination_grid_cv": {
+        "python": 0.225682,
+        "matlab": 0.223735,
+        "abs_diff": 0.001947,
+        "rel_pct": 0.8627
+      },
+      "fov_retina_fraction": {
+        "python": 0.671993,
+        "matlab": 0.672637,
+        "abs_diff": 0.000644,
+        "rel_pct": 0.0958
+      },
+      "fov_centre_offset": {
+        "python": 0.012172,
+        "matlab": 0.012559,
+        "abs_diff": 0.000387,
+        "rel_pct": 3.1759
+      }
+    },
+    {
+      "image": "3810040096cb.png",
+      "focus_tenengrad_norm": {
+        "python": 624.989269,
+        "matlab": 674.841505,
+        "abs_diff": 49.852236,
+        "rel_pct": 7.9765
+      },
+      "illumination_grid_cv": {
+        "python": 0.051543,
+        "matlab": 0.05149,
+        "abs_diff": 5.3e-05,
+        "rel_pct": 0.1021
+      },
+      "fov_retina_fraction": {
+        "python": 0.696288,
+        "matlab": 0.696241,
+        "abs_diff": 4.7e-05,
+        "rel_pct": 0.0067
+      },
+      "fov_centre_offset": {
+        "python": 0.00769,
+        "matlab": 0.006293,
+        "abs_diff": 0.001397,
+        "rel_pct": 18.1639
+      }
+    },
+    {
+      "image": "ee3fe7809e6a.png",
+      "focus_tenengrad_norm": {
+        "python": 180.526895,
+        "matlab": 214.910831,
+        "abs_diff": 34.383936,
+        "rel_pct": 19.0464
+      },
+      "illumination_grid_cv": {
+        "python": 0.070416,
+        "matlab": 0.069164,
+        "abs_diff": 0.001252,
+        "rel_pct": 1.7783
+      },
+      "fov_retina_fraction": {
+        "python": 0.773263,
+        "matlab": 0.773207,
+        "abs_diff": 5.6e-05,
+        "rel_pct": 0.0073
+      },
+      "fov_centre_offset": {
+        "python": 0.001234,
+        "matlab": 0.002061,
+        "abs_diff": 0.000827,
+        "rel_pct": 67.0294
+      }
+    },
+    {
+      "image": "b7a1bb106051.png",
+      "focus_tenengrad_norm": {
+        "python": 214.456843,
+        "matlab": 265.576697,
+        "abs_diff": 51.119855,
+        "rel_pct": 23.8369
+      },
+      "illumination_grid_cv": {
+        "python": 0.088024,
+        "matlab": 0.087708,
+        "abs_diff": 0.000316,
+        "rel_pct": 0.3591
+      },
+      "fov_retina_fraction": {
+        "python": 0.794037,
+        "matlab": 0.792712,
+        "abs_diff": 0.001325,
+        "rel_pct": 0.1668
+      },
+      "fov_centre_offset": {
+        "python": 0.004743,
+        "matlab": 0.006406,
+        "abs_diff": 0.001663,
+        "rel_pct": 35.063
+      }
+    },
+    {
+      "image": "3a61e690f4bb.png",
+      "focus_tenengrad_norm": {
+        "python": 70.542194,
+        "matlab": 77.523935,
+        "abs_diff": 6.981741,
+        "rel_pct": 9.8973
+      },
+      "illumination_grid_cv": {
+        "python": 0.21469,
+        "matlab": 0.214385,
+        "abs_diff": 0.000305,
+        "rel_pct": 0.1421
+      },
+      "fov_retina_fraction": {
+        "python": 0.74213,
+        "matlab": 0.741903,
+        "abs_diff": 0.000227,
+        "rel_pct": 0.0306
+      },
+      "fov_centre_offset": {
+        "python": 0.002831,
+        "matlab": 0.004767,
+        "abs_diff": 0.001937,
+        "rel_pct": 68.4177
+      }
+    },
+    {
+      "image": "d4f32b9c07df.png",
+      "focus_tenengrad_norm": {
+        "python": 265.017496,
+        "matlab": 341.290786,
+        "abs_diff": 76.27329,
+        "rel_pct": 28.7805
+      },
+      "illumination_grid_cv": {
+        "python": 0.095522,
+        "matlab": 0.094905,
+        "abs_diff": 0.000617,
+        "rel_pct": 0.6459
+      },
+      "fov_retina_fraction": {
+        "python": 0.682945,
+        "matlab": 0.683517,
+        "abs_diff": 0.000572,
+        "rel_pct": 0.0838
+      },
+      "fov_centre_offset": {
+        "python": 0.006215,
+        "matlab": 0.005749,
+        "abs_diff": 0.000466,
+        "rel_pct": 7.5035
+      }
+    },
+    {
+      "image": "98f48850ebce.png",
+      "focus_tenengrad_norm": {
+        "python": 399.267692,
+        "matlab": 432.889957,
+        "abs_diff": 33.622264,
+        "rel_pct": 8.421
+      },
+      "illumination_grid_cv": {
+        "python": 0.089559,
+        "matlab": 0.08914,
+        "abs_diff": 0.00042,
+        "rel_pct": 0.4687
+      },
+      "fov_retina_fraction": {
+        "python": 0.72306,
+        "matlab": 0.722737,
+        "abs_diff": 0.000322,
+        "rel_pct": 0.0446
+      },
+      "fov_centre_offset": {
+        "python": 0.009713,
+        "matlab": 0.008664,
+        "abs_diff": 0.00105,
+        "rel_pct": 10.8062
+      }
+    }
+  ]
+}

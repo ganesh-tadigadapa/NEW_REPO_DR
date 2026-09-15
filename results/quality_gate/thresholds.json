@@ -1,0 +1,71 @@
+{
+  "fitted_at": "2026-09-13T16:04:42.537299+00:00",
+  "labels_file": "data/interim/quality_real_labels_fit.csv",
+  "n_images": 140,
+  "n_skipped_unreadable": 0,
+  "n_gradeable": 76,
+  "provenance": "Ground truth by construction: real APTOS test_images with controlled degradations, scripts/make_quality_labelset.py seed 4242. NOT human-graded.",
+  "tag": "real-degraded",
+  "synthetic": false,
+  "thresholds": {
+    "focus_tenengrad_min": 94.127,
+    "illumination_grid_cv_max": 0.254,
+    "fov_retina_fraction_min": 0.6042
+  },
+  "per_check_fit": {
+    "focus_tenengrad_min": {
+      "threshold": 94.12699901838337,
+      "sensitivity": 0.7368,
+      "specificity": 0.7656,
+      "youden_j": 0.5025,
+      "tp": 56,
+      "tn": 49,
+      "fp": 15,
+      "fn": 20,
+      "optimal_range": [
+        93.8597,
+        94.3943
+      ],
+      "n_optimal_cuts": 2
+    },
+    "illumination_grid_cv_max": {
+      "threshold": 0.25397196892964674,
+      "sensitivity": 0.9474,
+      "specificity": 0.4844,
+      "youden_j": 0.4317,
+      "tp": 72,
+      "tn": 31,
+      "fp": 33,
+      "fn": 4,
+      "optimal_range": [
+        0.2525,
+        0.2554
+      ],
+      "n_optimal_cuts": 2
+    },
+    "fov_retina_fraction_min": {
+      "threshold": 0.6042237281799316,
+      "sensitivity": 1.0,
+      "specificity": 0.2812,
+      "youden_j": 0.2812,
+      "tp": 76,
+      "tn": 18,
+      "fp": 46,
+      "fn": 0,
+      "optimal_range": [
+        0.6042,
+        0.6042
+      ],
+      "n_optimal_cuts": 1
+    }
+  },
+  "combined_gate": {
+    "agreement_with_human": 0.8357,
+    "sensitivity_keeps_gradeable": 0.7368,
+    "specificity_rejects_ungradeable": 0.9531,
+    "tp": 56,
+    "tn": 61,
+    "fp": 3,
+    "fn": 20
+  }
+}

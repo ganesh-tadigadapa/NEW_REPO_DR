@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-09-13T15:52:02Z",
+  "implementation": "MATLAB base Simulink discrete-time flow model (matlab/simulink/build_dr_workflow_basic.m)",
+  "note": "SimEvents is not available on this licence, so the graded deliverable is a discrete-TIME flow approximation rather than a discrete-EVENT model. Cross-check against the independent Python SimPy implementation in scripts/simulate_workflow.py.",
+  "patients_per_year": 100000,
+  "min_ophthalmologists_with_ai": 1,
+  "min_ophthalmologists_without_ai": 3,
+  "fte_saved": 2,
+  "parameters_are_measured": false,
+  "unmeasured_parameters": [
+    "manualReadSeconds"
+  ],
+  "parameters_used": {
+    "generated_at": "2026-09-11T16:26:06.379668+00:00",
+    "source": "MEASURED: service times from live API traffic; rates from 80 held-out APTOS validation images through the full pipeline (model aptos-kaggle-run1)",
+    "n_scans": 6,
+    "qualityGateSeconds": 0.05,
+    "gradingSeconds": 3.017,
+    "ungradeableRate": 0,
+    "reviewSeconds": 18.2,
+    "uploadSeconds": 5.5,
+    "uploadSeconds_basis": "350 kB downscaled JPEG over a 512 kbit/s rural link",
+    "recaptureSeconds": 45,
+    "recaptureSeconds_basis": "assumption: health worker repositions and retakes",
+    "referableRate": 0.4,
+    "NOTE": "needsHumanRate (0.725) is MEASURED directly as 'referable OR escalated to clinician', de-duplicated. Do NOT sum referableRate and disagreementRate: an image can be both, and summing gives 1.14 which is impossible. ungradeableRate is 0.0 because the quality thresholds, fitted on 13 synthetic images, refuse essentially no real APTOS image (1 of 550 val, 0 of 400 test). That is a known defect, not a property of the data.",
+    "rates_measured_at": "2026-09-13T15:50:04.983407Z",
+    "rates_n": 80,
+    "needsHumanRate": 0.725,
+    "flag_breakdown": {
+      "agree": 21,
+      "severity_disagreement": 19,
+      "referral_disagreement": 33,
+      "rules_cannot_confirm": 7
+    },
+    "unmeasured_fields": [
+      "manualReadSeconds"
+    ],
+    "manualReadSeconds": 120
+  },
+  "honesty_note": "Any parameter listed in unmeasured_parameters fell back to a documented placeholder. referableRate and disagreementRate require a real dataset evaluation (not demo traffic), so the FTE figure is placeholder-influenced until the holdout has run.",
+  "final_backlog_with_ai": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "final_backlog_without_ai": [
+    55000.050000001596,
+    10000.049999999857,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

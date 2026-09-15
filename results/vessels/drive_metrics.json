@@ -1,0 +1,173 @@
+{
+  "generated_at": "2026-09-13T13:12:42.198171+00:00",
+  "method": "unsupervised multiscale Frangi vesselness + Otsu, coverage-guarded",
+  "n_images": 20,
+  "mean_dice": 0.6029,
+  "mean_sensitivity": 0.5324,
+  "mean_specificity": 0.9712,
+  "mean_predicted_coverage": 0.0911,
+  "mean_truth_coverage": 0.1254,
+  "framing": "This component exists to suppress vessels in the dark-lesion detectors, not to compete on DRIVE. Supervised published methods reach ~0.80 Dice; an unsupervised filter scoring below that is the expected result for a different task. Compare predicted vs truth coverage: a large gap is what would actually break lesion counting.",
+  "per_image": [
+    {
+      "image": "21_training.tif",
+      "dice": 0.6683,
+      "sensitivity": 0.6231,
+      "specificity": 0.9704,
+      "predicted_coverage": 0.0944,
+      "truth_coverage": 0.1092
+    },
+    {
+      "image": "22_training.tif",
+      "dice": 0.6225,
+      "sensitivity": 0.5405,
+      "specificity": 0.9705,
+      "predicted_coverage": 0.0963,
+      "truth_coverage": 0.1308
+    },
+    {
+      "image": "23_training.tif",
+      "dice": 0.523,
+      "sensitivity": 0.5248,
+      "specificity": 0.9491,
+      "predicted_coverage": 0.0961,
+      "truth_coverage": 0.0955
+    },
+    {
+      "image": "24_training.tif",
+      "dice": 0.5865,
+      "sensitivity": 0.465,
+      "specificity": 0.9756,
+      "predicted_coverage": 0.0983,
+      "truth_coverage": 0.1677
+    },
+    {
+      "image": "25_training.tif",
+      "dice": 0.549,
+      "sensitivity": 0.4532,
+      "specificity": 0.968,
+      "predicted_coverage": 0.0907,
+      "truth_coverage": 0.1393
+    },
+    {
+      "image": "26_training.tif",
+      "dice": 0.611,
+      "sensitivity": 0.5294,
+      "specificity": 0.9716,
+      "predicted_coverage": 0.0897,
+      "truth_coverage": 0.1223
+    },
+    {
+      "image": "27_training.tif",
+      "dice": 0.6146,
+      "sensitivity": 0.5404,
+      "specificity": 0.9681,
+      "predicted_coverage": 0.0968,
+      "truth_coverage": 0.1276
+    },
+    {
+      "image": "28_training.tif",
+      "dice": 0.6184,
+      "sensitivity": 0.5185,
+      "specificity": 0.9738,
+      "predicted_coverage": 0.0962,
+      "truth_coverage": 0.1421
+    },
+    {
+      "image": "29_training.tif",
+      "dice": 0.6327,
+      "sensitivity": 0.5599,
+      "specificity": 0.9709,
+      "predicted_coverage": 0.0939,
+      "truth_coverage": 0.1219
+    },
+    {
+      "image": "30_training.tif",
+      "dice": 0.6026,
+      "sensitivity": 0.5404,
+      "specificity": 0.9675,
+      "predicted_coverage": 0.0904,
+      "truth_coverage": 0.1139
+    },
+    {
+      "image": "31_training.tif",
+      "dice": 0.5846,
+      "sensitivity": 0.6131,
+      "specificity": 0.9536,
+      "predicted_coverage": 0.096,
+      "truth_coverage": 0.0875
+    },
+    {
+      "image": "32_training.tif",
+      "dice": 0.6765,
+      "sensitivity": 0.5998,
+      "specificity": 0.9764,
+      "predicted_coverage": 0.0927,
+      "truth_coverage": 0.1198
+    },
+    {
+      "image": "33_training.tif",
+      "dice": 0.6368,
+      "sensitivity": 0.5769,
+      "specificity": 0.9688,
+      "predicted_coverage": 0.0951,
+      "truth_coverage": 0.1172
+    },
+    {
+      "image": "34_training.tif",
+      "dice": 0.2001,
+      "sensitivity": 0.1152,
+      "specificity": 0.9939,
+      "predicted_coverage": 0.0217,
+      "truth_coverage": 0.1427
+    },
+    {
+      "image": "35_training.tif",
+      "dice": 0.6709,
+      "sensitivity": 0.5917,
+      "specificity": 0.9753,
+      "predicted_coverage": 0.0959,
+      "truth_coverage": 0.1255
+    },
+    {
+      "image": "36_training.tif",
+      "dice": 0.621,
+      "sensitivity": 0.4999,
+      "specificity": 0.9793,
+      "predicted_coverage": 0.0963,
+      "truth_coverage": 0.1579
+    },
+    {
+      "image": "37_training.tif",
+      "dice": 0.6418,
+      "sensitivity": 0.561,
+      "specificity": 0.9728,
+      "predicted_coverage": 0.0948,
+      "truth_coverage": 0.1268
+    },
+    {
+      "image": "38_training.tif",
+      "dice": 0.6644,
+      "sensitivity": 0.5848,
+      "specificity": 0.9747,
+      "predicted_coverage": 0.0957,
+      "truth_coverage": 0.1258
+    },
+    {
+      "image": "39_training.tif",
+      "dice": 0.6388,
+      "sensitivity": 0.5658,
+      "specificity": 0.9707,
+      "predicted_coverage": 0.0962,
+      "truth_coverage": 0.1246
+    },
+    {
+      "image": "40_training.tif",
+      "dice": 0.6944,
+      "sensitivity": 0.644,
+      "specificity": 0.9739,
+      "predicted_coverage": 0.0941,
+      "truth_coverage": 0.1101
+    }
+  ]
+}

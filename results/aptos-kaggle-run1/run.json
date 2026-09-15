@@ -1,0 +1,56 @@
+{
+  "run_id": "aptos-kaggle-run1",
+  "finished_at": "2026-09-13T15:05:25.400203+00:00",
+  "git_commit": "unknown",
+  "train_seconds": 4412.2,
+  "image_size": 512,
+  "backbone": "efficientnetv2s",
+  "last_conv_layer": "top_conv",
+  "epochs_requested": 12,
+  "batch": 16,
+  "lr": 0.0003,
+  "enhance": true,
+  "class_weights": [
+    0.9721165895462036,
+    1.4620252847671509,
+    6.498795032501221,
+    11.398406028747559
+  ],
+  "n_train": 3112,
+  "n_val": 550,
+  "train_grade_dist": [
+    1534,
+    314,
+    849,
+    164,
+    251
+  ],
+  "val_grade_dist": [
+    271,
+    56,
+    150,
+    29,
+    44
+  ],
+  "seed": 1337,
+  "tensorflow": "2.20.0",
+  "argv": {
+    "aptos_csv": "/kaggle/input/competitions/aptos2019-blindness-detection/train.csv",
+    "aptos_images": "/kaggle/input/competitions/aptos2019-blindness-detection/train_images",
+    "image_ext": ".png",
+    "out": "/kaggle/working/artifacts/model",
+    "run_id": "aptos-kaggle-run1",
+    "epochs": 12,
+    "batch": 16,
+    "image_size": 512,
+    "backbone": "efficientnetv2s",
+    "lr": 0.0003,
+    "head_only_epochs": 1,
+    "val_frac": 0.15,
+    "seed": 1337,
+    "no_enhance": false,
+    "no_class_weights": false,
+    "limit": 0,
+    "gcs_out": ""
+  }
+}

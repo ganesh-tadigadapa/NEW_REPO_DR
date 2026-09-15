@@ -1,0 +1,49 @@
+{
+ "row": "Full pipeline + quality gate (ungradeable excluded)",
+ "n_total": 550,
+ "n_refused_by_gate": 106,
+ "n_evaluated": 444,
+ "ungradeable_rate": 0.1927,
+ "qwk": 0.9187,
+ "exact_accuracy": 0.8266,
+ "within_one": 0.9775,
+ "referable_sensitivity": 0.918,
+ "referable_specificity": 0.9349,
+ "confusion": [
+  [
+   211,
+   3,
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   30,
+   14,
+   1,
+   1
+  ],
+  [
+   0,
+   14,
+   99,
+   12,
+   1
+  ],
+  [
+   0,
+   0,
+   11,
+   5,
+   5
+  ],
+  [
+   0,
+   1,
+   5,
+   8,
+   22
+  ]
+ ]
+}
