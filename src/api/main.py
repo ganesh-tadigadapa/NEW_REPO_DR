@@ -17,16 +17,31 @@ import os
 import time
 from datetime import datetime, timezone
 
-from fastapi import FastAPI, File, Form, HTTPException, Response, UploadFile
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
+from src.api.evidence import get_evidence_store
 from src.api.pipeline import analyze
+from src.api.reports import get_scan_store as _reports_scan_store
+from src.api.reports import router as reports_router
 from src.api.store import get_store
+from src.auth import config as auth_config
+from src.auth.models import Account
+from src.auth.routes import router as auth_router
+from src.auth.security import optional_or_required_account
+from src.carefinder import config as care_finder_config
+from src.carefinder.routes import router as care_finder_router
 from src.common.config import DISCLAIMER, RESULTS_DIR
 from src.common.imaging import decode_image
+from src.delivery import config as delivery_config
+from src.delivery.media import get_media_store
+from src.delivery.routes import router as delivery_router
 from src.grading import predict as predict_mod
+from src.passport import config as passport_config
+from src.passport import service as passport_service
+from src.passport.routes import router as passport_router
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("dr-api")
@@ -39,13 +54,69 @@ API_VERSION = "v1"
 app = FastAPI(title="DR Screening API", version=API_VERSION,
               description=DISCLAIMER)
 
+@app.middleware("http")
+async def _json_errors(request, call_next):
+    """Turn an unhandled exception into a JSON error the BROWSER can actually read.
+
+    Registered BEFORE the CORS middleware below, which matters and is not cosmetic.
+    `add_middleware` inserts at the front, so the last one added is the outermost: this
+    ordering puts CORS *outside* this handler, and the response produced here therefore
+    picks up the Access-Control-Allow-Origin header on its way out.
+
+    Without this, an unhandled exception is caught by Starlette's ServerErrorMiddleware,
+    which sits OUTSIDE the CORS layer and answers `text/plain` "Internal Server Error"
+    with no CORS headers at all. The browser then refuses to expose that response to
+    JavaScript and `fetch()` rejects with `TypeError: Failed to fetch` — so a plain
+    server-side bug reaches the user as a network error naming nothing. That is the
+    mechanism behind the "Failed to fetch" reports on /login.
+
+    The message is deliberately generic and the traceback goes to the server log only:
+    this is a public endpoint and an exception string can carry internals.
+    """
+    try:
+        return await call_next(request)
+    except Exception:                               # noqa: BLE001
+        log.exception("unhandled error on %s %s", request.method, request.url.path)
+        return JSONResponse(
+            status_code=500,
+            content={"detail": {"error": {
+                "code": "internal_error",
+                "message": ("The server hit an unexpected error handling this request. "
+                            "Check the API logs for the traceback."),
+            }}},
+        )
+
+
+_CORS_ORIGINS = [o for o in os.getenv("CORS_ORIGINS", "*").split(",") if o]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o for o in os.getenv("CORS_ORIGINS", "*").split(",") if o],
-    allow_credentials=False,
+    allow_origins=_CORS_ORIGINS,
+    # Credentialed CORS is incompatible with a wildcard origin, and the session token is
+    # sent as an Authorization header rather than a cookie in the split-origin (Vercel +
+    # Cloud Run) deployment. Cookies are only enabled when the origin list is explicit.
+    allow_credentials=_CORS_ORIGINS != ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- access-control layer -------------------------------------------------------
+# Mounted as routers so authentication stays entirely outside the medical pipeline.
+app.include_router(auth_router)
+app.include_router(reports_router)
+# Report DELIVERY (WhatsApp). A communication layer, mounted like the others so it stays
+# outside the medical pipeline entirely — see src/delivery/__init__.py.
+app.include_router(delivery_router)
+# Smart Care Finder (where to go next). An ACCESS layer, mounted like the others so it
+# stays outside the medical pipeline entirely — see src/carefinder/__init__.py. It
+# cannot see an image, a grade or a report, and nothing it does can change one.
+app.include_router(care_finder_router)
+# CareBridge Eye Health Passport (what has changed since last time). A LONGITUDINAL
+# layer, mounted like the others so it stays outside the medical pipeline entirely —
+# see src/passport/__init__.py. It cannot grade an image and nothing it does can change
+# a grade, a referral or a report; it subtracts two grades the model already decided.
+app.include_router(passport_router)
+# The reports router reads scans through this seam so it can be tested without a model.
+app.dependency_overrides[_reports_scan_store] = lambda: STORE
 
 PREDICTOR = None
 STORE = None
@@ -60,6 +131,30 @@ def _startup():
     log.info("model_loaded=%s reason=%s store=%s (%.1fs)",
              PREDICTOR.available, PREDICTOR.reason, STORE.backend,
              time.perf_counter() - t)
+    log.info("auth env=%s protect_analyze=%s",
+             auth_config.AUTH_ENV, auth_config.PROTECT_ANALYZE)
+    log.info("sign-in: no verification (any mobile number opens a session)")
+    # Says whether a report could be delivered, and why not when it could not. Names
+    # missing variables, never their values.
+    wa = delivery_config.status()
+    # `provider` is in this line because WHATSAPP_PROVIDER defaults to "twilio" while
+    # .env.example ships "meta": an .env that simply omits the variable gets Twilio
+    # without saying so, and a Twilio TRIAL cannot send a PDF at all (it refuses
+    # MediaUrl outright). "configured=True" only means the credentials are present, so
+    # naming the active provider here is what tells an operator which failure to expect.
+    log.info("whatsapp delivery enabled=%s provider=%s configured=%s%s", wa["enabled"],
+             wa["provider"], wa["configured"],
+             "" if wa["configured"] else f" reason={wa['reason']}")
+    # Same rule for Smart Care Finder: says whether a nearby-care search could run, and
+    # names the missing variable when it could not. Never its value.
+    cf = care_finder_config.status()
+    log.info("care finder enabled=%s configured=%s%s", cf["enabled"], cf["configured"],
+             "" if cf["configured"] else f" reason={cf['reason']}")
+    # Whether longitudinal history is being kept. No patient id, no grade and no count
+    # of anybody's screenings appears in this line.
+    pp = passport_config.status()
+    log.info("eye health passport enabled=%s max_history=%s", pp["enabled"],
+             pp["max_history"])
 
 
 @app.get("/health")
@@ -73,6 +168,25 @@ def health():
                                      else (PREDICTOR.reason if PREDICTOR else "starting")),
         "synthetic_demo_model": bool(PREDICTOR and PREDICTOR.synthetic),
         "store": STORE.backend if STORE else None,
+        "auth": {
+            # A session is still required for the protected endpoints; what changed is
+            # how easy it is to get one.
+            "required": auth_config.PROTECT_ANALYZE,
+            "env": auth_config.AUTH_ENV,
+            # Stated plainly so nobody reads this deployment as verified.
+            "verification": "none",
+            "note": ("Sign-in accepts any mobile number without verification. "
+                     "The number is a claim, not a proof."),
+        },
+        # Whether the optional WhatsApp delivery channel would work. No credential, no
+        # sender number and no URL appears in this block — see delivery/config.status().
+        "whatsapp": delivery_config.status(),
+        # Whether Smart Care Finder could search. No Google key, no key prefix and no
+        # key length appears in this block -- see carefinder/config.status().
+        "care_finder": care_finder_config.status(),
+        # Whether the Eye Health Passport is keeping longitudinal history. No patient
+        # data of any kind appears in this block -- see passport/config.status().
+        "passport": passport_config.status(),
         "disclaimer": DISCLAIMER,
     }
 
@@ -85,7 +199,14 @@ def root():
 
 @app.post(f"/{API_VERSION}/analyze")
 async def analyze_endpoint(file: UploadFile = File(...),
-                           patient_ref: str | None = Form(default=None)):
+                           patient_ref: str | None = Form(default=None),
+                           account: Account | None = Depends(optional_or_required_account)):
+    """Unchanged medical behaviour; a session is now required to reach it.
+
+    The account is used for nothing except deciding whether the request is allowed. It
+    is not passed to `analyze()`, not stored on the scan, and not visible to any part of
+    the pipeline — the screening result must not depend on who uploaded the image.
+    """
     if file.content_type and file.content_type not in ALLOWED_TYPES:
         raise HTTPException(415, detail={"error": {
             "code": "unsupported_media_type",
@@ -119,7 +240,60 @@ async def analyze_endpoint(file: UploadFile = File(...),
     except Exception:                               # noqa: BLE001
         log.exception("store write failed (continuing — the result is still valid)")
 
+    # Full evidence, written separately, so a verified doctor can reopen this scan with
+    # its images and Grad-CAM later. Best effort by design: see src/api/evidence.py.
+    get_evidence_store().save(result)
+
+    # Keep THIS report — the exact PDF bytes already in `result` — so the patient can
+    # have it delivered later without anything being generated a second time. The owner
+    # is recorded in the delivery store, never on the scan record: the screening result
+    # still does not know or depend on who uploaded the image. Best effort, like the
+    # evidence write; a failure here cannot affect the response.
+    _retain_report_pdf(result, account)
+
+    # The patient's longitudinal record: this screening added to their Eye Health
+    # Passport, the previous result found, the two compared, and the next follow-up
+    # window planned. Best effort by design, like the two writes above — a patient
+    # losing a timeline entry must never turn a successful screening into an error for
+    # the health worker standing in front of them. The response is not altered by it:
+    # see the comment in `_record_passport_entry`.
+    _record_passport_entry(result, account)
+
     return JSONResponse(status_code=status, content=result)
+
+
+def _retain_report_pdf(result: dict, account: Account | None) -> None:
+    if account is None:
+        return
+    pdf_b64 = ((result.get("report") or {}).get("pdf_b64") or "")
+    if not pdf_b64:
+        return
+    try:
+        import base64
+        get_media_store().save(result, base64.b64decode(pdf_b64),
+                               account_id=account.account_id)
+    except Exception:                               # noqa: BLE001
+        log.exception("report retention failed (the screening result is unaffected)")
+
+
+def _record_passport_entry(result: dict, account: Account | None) -> None:
+    """Add this screening to the caller's longitudinal record.
+
+    Note what this does NOT do: it does not put anything into `result`. The
+    `/v1/analyze` response contract is unchanged and the comparison is fetched by its
+    own endpoint — a screening result must not start depending on how many times the
+    person has been screened before, and the frontend contract test in
+    `tests/test_carebridge_i18n.py` pins that the response shape did not move.
+
+    Ownership is recorded in the passport store, never on the scan record, exactly as
+    report retention records it in the delivery store.
+    """
+    if account is None:
+        return
+    try:
+        passport_service.record_screening(result, account.account_id)
+    except Exception:                               # noqa: BLE001
+        log.exception("passport write failed (the screening result is unaffected)")
 
 
 def _summarise(result: dict) -> dict:
@@ -155,7 +329,8 @@ class Review(BaseModel):
 
 
 @app.post(f"/{API_VERSION}/review/{{scan_id}}")
-def review(scan_id: str, body: Review):
+def review(scan_id: str, body: Review,
+           account: Account | None = Depends(optional_or_required_account)):
     ok = STORE.save_review(scan_id, body.model_dump())
     if not ok:
         raise HTTPException(404, detail={"error": {
@@ -165,9 +340,18 @@ def review(scan_id: str, body: Review):
 
 
 @app.get(f"/{API_VERSION}/scans")
-def scans(limit: int = 50):
+def scans(limit: int = 50,
+          account: Account | None = Depends(optional_or_required_account)):
+    """The in-session review queue. Requires a session, and `patient_ref` is stripped.
+
+    That field is free text with no PII enforced by us, so it may hold a name. The
+    review UI never displayed it; removing it from the payload means a screening
+    identifier cannot leak to a screen that does not need it. The doctor-facing
+    collection is /v1/reports, which is verified-doctor only.
+    """
     rows = STORE.list_scans(min(max(limit, 1), 200))
-    return {"scans": rows, "count": len(rows)}
+    safe = [{k: v for k, v in r.items() if k != "patient_ref"} for r in rows]
+    return {"scans": safe, "count": len(safe)}
 
 
 @app.get(f"/{API_VERSION}/metrics")

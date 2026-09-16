@@ -1,6 +1,16 @@
 // Typed client for docs/API_CONTRACT.md v1. The contract is frozen; this file mirrors it.
+//
+// The request/response SHAPES are unchanged. What is new is that the protected calls
+// carry the session token, because /v1/analyze, /v1/scans and /v1/review now sit behind
+// the access-control layer. Nothing about the medical payloads moved.
+import { authFetch } from "@/lib/auth";
+// 127.0.0.1 rather than "localhost": on macOS "localhost" resolves to BOTH ::1 and
+// 127.0.0.1, while uvicorn (--host 0.0.0.0 or 127.0.0.1) binds IPv4 only. The browser
+// tries ::1 first, gets ECONNREFUSED and falls back, which surfaces as calls that
+// intermittently stall even though the API is up and curl looks fine. Naming the IPv4
+// address removes the ambiguity. Override with NEXT_PUBLIC_API_BASE for any deployment.
 export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://localhost:8080";
+  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://127.0.0.1:8080";
 
 export type QualityCheck = {
   passed: boolean; value: number; threshold: number; unit: string;
@@ -68,7 +78,7 @@ export async function analyze(file: File, patientRef?: string): Promise<AnalyzeR
   const fd = new FormData();
   fd.append("file", file);
   if (patientRef) fd.append("patient_ref", patientRef);
-  const r = await fetch(`${API_BASE}/v1/analyze`, { method: "POST", body: fd });
+  const r = await authFetch("/v1/analyze", { method: "POST", body: fd });
   const body = await r.json().catch(() => null);
   if (r.ok || r.status === 422) return body as AnalyzeResult;
   const msg = body?.detail?.error?.message || body?.error?.message || `request failed (${r.status})`;
@@ -78,11 +88,19 @@ export async function analyze(file: File, patientRef?: string): Promise<AnalyzeR
 export async function submitReview(scanId: string, payload: {
   agrees: boolean; corrected_grade: number | null; notes: string; seconds_to_decide: number;
 }) {
-  const r = await fetch(`${API_BASE}/v1/review/${scanId}`, {
+  const r = await authFetch(`/v1/review/${scanId}`, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
   if (!r.ok) throw new Error(`review failed (${r.status})`);
+  return r.json();
+}
+
+/** The in-session review queue. Requires a session; the response no longer carries
+ *  patient_ref, which the UI never displayed. */
+export async function getScans(limit = 50) {
+  const r = await authFetch(`/v1/scans?limit=${limit}`);
+  if (!r.ok) throw new Error(`scans ${r.status}`);
   return r.json();
 }
 

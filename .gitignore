@@ -19,15 +19,29 @@ artifacts/
 # node
 web/node_modules/
 web/.next/
+web/.next-*/
 web/out/
+web/tsconfig.tsbuildinfo
+# stray build output from a build run with an ABSOLUTE NEXT_DIST_DIR,
+# which Next.js resolves relative to web/ and writes as web/var/folders/...
+web/var/
+web/.env.local
 
 # secrets
 kaggle.json
 *-sa-key.json
 service-account*.json
+# Cloud service-account keys. Firebase Phone Auth has been removed, but these patterns
+# stay: a downloaded Google service-account JSON is a REAL private key wherever it came
+# from, and this project may still use one for Cloud Run or the optional Firestore store.
+*-adminsdk-*.json
+secrets/
 
 # scratch
 /tmp_*
 
 # the dashboard's currently-published metrics: a pointer to a run, not a result itself
 results/active/
+
+# local env backups — may contain live credentials
+.env.bak*

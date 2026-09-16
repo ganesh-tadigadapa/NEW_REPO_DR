@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Shell from "@/components/Shell";
+import LanguageOnboarding from "@/components/carebridge/LanguagePicker";
+import CareBridgeBand from "@/components/carebridge/CareBridgeBand";
 
 const STEPS = [
   { n: "01", h: "Capture and upload", p: "A health worker photographs the retina. The browser shrinks the image before upload — a raw fundus JPEG is 6 MB and rural uplink is slow." },
@@ -19,6 +21,8 @@ const REQS = [
 export default function Home() {
   return (
     <Shell>
+      {/* The language question is asked once, before anything else, and never again. */}
+      <LanguageOnboarding />
       <section className="hero">
         <h2>Diabetic retinopathy screening that explains itself</h2>
         <p className="lede">
@@ -29,9 +33,17 @@ export default function Home() {
           — <strong>the evidence behind it</strong>.
         </p>
         <div className="ctarow">
-          <Link href="/screen" className="cta solid">Screen an image</Link>
+          {/* Screening needs an account, so the primary action says so rather than
+              bouncing the visitor off a guard. */}
+          <Link href="/login" className="cta solid">Sign in to screen</Link>
+          <Link href="/signup" className="cta line">Create account</Link>
           <Link href="/how-it-works" className="cta line">How it works</Link>
         </div>
+        <p className="muted" style={{ fontSize: ".84rem", marginTop: 12 }}>
+          Sign in with your mobile number and a one-time code — there is no password.
+          Doctor accounts additionally get an anonymised report queue once a programme
+          administrator confirms their medical registration.
+        </p>
         <div className="factbar">
           <div className="fact"><span className="k">Grading scale</span><span className="v">ICDR 0–4</span></div>
           <div className="fact"><span className="k">Referral bar</span><span className="v">&gt;90<small>% sens</small></span></div>
@@ -57,6 +69,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <CareBridgeBand />
 
       <section className="band">
         <h3>The five graded requirements</h3>

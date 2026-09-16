@@ -3,7 +3,7 @@ PY := .venv/bin/python
 API := http://127.0.0.1:8080
 
 .DEFAULT_GOAL := help
-.PHONY: help setup api web test lint synth quality-fit sim params docker deploy clean freeze holdout ablation explain smoke
+.PHONY: help setup api web web-build web-test web-typecheck test lint synth quality-fit sim params docker deploy clean freeze holdout ablation explain smoke doctors approve-doctor whatsapp-check care-finder-check tunnel
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -22,18 +22,64 @@ api:  ## run the API on :8080
 web:  ## run the frontend on :3000
 	cd web && npm run dev
 
+web-build:  ## production build of the frontend (refuses to run while `make web` is live)
+	@if pgrep -f "next dev" > /dev/null; then \
+	  echo "A Next.js dev server is running."; \
+	  echo "'next build' and 'next dev' share web/.next — running both mixes production"; \
+	  echo "and dev artifacts and produces 'Cannot find module ./NNN.js' at runtime."; \
+	  echo ""; \
+	  echo "Stop it first:  pkill -f 'next dev'"; \
+	  echo "Then:           make web-build && rm -rf web/.next && make web"; \
+	  exit 1; \
+	fi
+	cd web && npm run build
+
 test:  ## run the test suite
 	$(PY) -m pytest tests/ -q
+
+web-test:  ## run the frontend tests (CareBridge language, voice and result presentation)
+	cd web && npm test
+
+web-typecheck:  ## type-check the frontend without building
+	cd web && npx tsc --noEmit
 
 synth:  ## regenerate the synthetic test images
 	$(PY) scripts/make_synthetic_fundus.py
 
-smoke:  ## end-to-end check against a running API
+smoke:  ## end-to-end check against a running API (TOKEN=... for the authenticated part)
 	@curl -sf $(API)/health | $(PY) -m json.tool
-	@curl -s -o /dev/null -w "good image  -> HTTP %{http_code}\n" \
+	@echo "-- access control (no token) --"
+	@curl -s -o /dev/null -w "no token    -> HTTP %{http_code} (401 expected)\n" \
 	  -F "file=@data/interim/synthetic/grade3_1.png" $(API)/v1/analyze
-	@curl -s -o /dev/null -w "blurry image-> HTTP %{http_code} (422 expected)\n" \
-	  -F "file=@data/interim/synthetic/bad_blur.png" $(API)/v1/analyze
+	@if [ -n "$(TOKEN)" ]; then \
+	  echo "-- screening (with supplied token) --" ; \
+	  curl -s -o /dev/null -w "good image  -> HTTP %{http_code} (200 expected)\n" \
+	    -H "Authorization: Bearer $(TOKEN)" \
+	    -F "file=@data/interim/synthetic/grade3_1.png" $(API)/v1/analyze ; \
+	  curl -s -o /dev/null -w "blurry image-> HTTP %{http_code} (422 expected)\n" \
+	    -H "Authorization: Bearer $(TOKEN)" \
+	    -F "file=@data/interim/synthetic/bad_blur.png" $(API)/v1/analyze ; \
+	else \
+	  echo "-- screening: SKIPPED (no TOKEN) --" ; \
+	  echo "   Twilio Verify owns the code, so there is no development OTP to mint one from." ; \
+	  echo "   Sign in at the website, copy 'dr_session_token' from localStorage, then:" ; \
+	  echo "     make smoke TOKEN=<token>" ; \
+	fi
+
+whatsapp-check:  ## verify Twilio WhatsApp setup (add TO=+91... to send a real message)
+	$(PY) scripts/check_whatsapp.py $(if $(TO),--to $(TO),)
+
+care-finder-check:  ## verify the Google Places setup (SUITE=1 for a full live run, or NEAR=/AREA=)
+	$(PY) scripts/check_care_finder.py $(if $(SUITE),--suite,) $(if $(NEAR),--near $(NEAR),) $(if $(AREA),--area "$(AREA)",)
+
+tunnel:  ## expose the API over HTTPS so Twilio can fetch report PDFs (restart the API after)
+	scripts/dev_tunnel.sh
+
+doctors:  ## list doctor accounts and their verification state
+	$(PY) scripts/approve_doctor.py --list
+
+approve-doctor:  ## approve a doctor account (needs MOBILE=+91XXXXXXXXXX)
+	$(PY) scripts/approve_doctor.py --mobile $(MOBILE)
 
 quality-fit:  ## fit the quality-gate thresholds (needs LABELS=path/to/labels.csv)
 	$(PY) scripts/compare_focus_metrics.py --labels $(LABELS)

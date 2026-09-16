@@ -6,6 +6,7 @@
  * a plausible number. That is the anti-fabrication rule, enforced in the UI.
  */
 import { useEffect, useState } from "react";
+import Guard from "@/components/Guard";
 import Shell from "@/components/Shell";
 import { getMetrics, getOperational } from "@/lib/api";
 
@@ -36,6 +37,7 @@ export default function Dashboard() {
   const NA = <span className="muted" style={{ fontSize: "1rem" }}>not run yet</span>;
 
   return (
+    <Guard>
     <Shell>
       <h2 style={{ fontFamily: "var(--f-display)", fontWeight: 500, marginTop: 0 }}>
         Dataset evaluation
@@ -102,5 +104,6 @@ export default function Dashboard() {
               sub="target <30 s" />
       </div>
     </Shell>
+    </Guard>
   );
 }

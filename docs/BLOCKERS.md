@@ -94,3 +94,53 @@ The FTE saving depends on it more than anything else. A sensitivity analysis acr
 
 `scripts/run_holdout.py` permanently records any override. It must be run **once**, after
 everything is frozen. I will not run it without your explicit go-ahead.
+
+---
+
+## 7. A Google Maps API key, so Smart Care Finder shows real facilities
+
+Everything about the feature is built, tested and running — the endpoint, the ranking,
+the map, the list, the directions, all four languages, 85 tests. It is holding one thing:
+a key.
+
+**Note this is NOT the GCP entry at the top of this file.** No Cloud Run, no GPU quota,
+no deployment — one API key on one project, and this repo calls it from your laptop.
+
+1. <https://console.cloud.google.com> → create or reuse a project (`sih-dr-26038` if you
+   still have it).
+
+   ⚠️ **Make this a server-only key, and keep it out of `NEXT_PUBLIC_*`.** Anything
+   prefixed `NEXT_PUBLIC_` is compiled into the JavaScript bundle, so anyone who opens
+   devtools could spend your Places quota. The Care Finder key lives in `.env` on the
+   backend, like every other credential in this project.
+2. **Enable billing on it.** Places has no free-key tier; Google's free monthly credit
+   still requires a billing account to exist. Expect **$0** at demo volumes: a search is
+   billed once, the radius buttons hit a 5-minute in-process cache, and each account is
+   capped at 30 searches an hour.
+3. APIs & Services → Library → **"Places API (New)"** → Enable.
+   ⚠️ There is a separate, older **"Places API"** entry. Enabling that one does *not*
+   enable this one, and from the browser the failure looks identical to a bad key.
+4. Credentials → Create credentials → API key. Restrict it:
+   * **API restrictions** → Places API (New)
+   * **Application restrictions** → **None**. This is a server-to-server call; a
+     browser/referrer-restricted key is refused outright.
+5. Paste it into `.env` and check it without opening a browser:
+
+   ```bash
+   GOOGLE_MAPS_API_KEY=AIza...   # in .env — git-ignored, never committed
+   make care-finder-check        # config only, no API call
+   make care-finder-check SUITE=1  # the whole feature: one device search + three cities
+   ```
+
+   Then restart the API (`make api`) so it picks the key up — the value is read at
+   import time, and the result page asks `/v1/care-finder/status` before it offers a
+   search, so a stale process means a still-hidden feature.
+
+`make care-finder-check` names the three failure modes apart, because they need three
+different fixes: an invalid key, a project without Places API (New), and a project with
+no billing account all arrive from Google as the same `PERMISSION_DENIED`.
+
+Until then the feature says "not available right now" in the patient's language and
+nothing else on the result page is affected. There is deliberately **no demo mode that
+invents hospitals** — see `docs/CARE_FINDER.md`.
+

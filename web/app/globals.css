@@ -181,3 +181,1035 @@ footer.site{
   color:var(--muted);font-size:.8rem;display:flex;flex-direction:column;gap:5px;
 }
 footer.site a{color:var(--muted)}
+
+/* ============ access-control surfaces: auth, role chrome, reports ============
+   Same tokens, same spacing scale, same card language as everything above. The
+   authentication screens are part of this application, not a bolted-on login. */
+
+/* ---- banners ---- */
+.pendingbar{
+  background:var(--gold-soft); color:var(--gold); border-bottom:1px solid var(--gold);
+  font-size:.76rem; font-weight:600; text-align:center; padding:7px 12px;
+}
+
+/* ---- navigation: role chip + session buttons ---- */
+.navspacer{flex:1 1 auto}
+.rolechip{
+  font-family:var(--f-mono); font-size:.62rem; letter-spacing:.11em;
+  padding:5px 9px; border-radius:4px; align-self:center;
+  border:1px solid var(--line-2); color:var(--muted); background:var(--surface);
+}
+.rolechip.role-doctor{border-color:var(--teal); color:var(--teal); background:var(--teal-soft)}
+.rolechip.role-admin{border-color:var(--gold); color:var(--gold); background:var(--gold-soft)}
+.navbtn{
+  font:inherit; font-size:.85rem; color:var(--ink-2); background:none;
+  border:1px solid transparent; border-radius:5px; padding:6px 12px; cursor:pointer;
+}
+.navbtn:hover{background:var(--surface-2)}
+nav.tabs a.navlogin{border:1px solid var(--line-2); background:var(--surface)}
+
+/* ---- auth pages ---- */
+.authpage{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.85fr);
+  gap:22px; align-items:start; padding-block:30px;
+}
+@media (max-width:760px){ .authpage{grid-template-columns:1fr} }
+.authcard{padding:26px 28px}
+.authtitle{
+  font-family:var(--f-display); font-weight:500; letter-spacing:-.015em;
+  font-size:clamp(1.5rem,4vw,2rem); margin:0 0 6px; line-height:1.1;
+}
+.authsub{color:var(--ink-2); margin:0 0 22px; font-size:.95rem}
+.authfoot{
+  margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+  font-size:.88rem; color:var(--muted);
+}
+.authaside{
+  background:var(--surface-2); border:1px solid var(--line); border-radius:8px;
+  padding:20px 22px; font-size:.86rem; color:var(--ink-2);
+}
+.authaside p{margin:6px 0 0}
+.authactions{display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; justify-content:space-between}
+.linkbtn{
+  font:inherit; font-size:.86rem; color:var(--crimson); background:none; border:0;
+  padding:0; cursor:pointer; text-decoration:underline; text-underline-offset:3px;
+}
+.linkbtn:disabled{color:var(--muted); cursor:not-allowed; text-decoration:none}
+.stepmark{
+  font-family:var(--f-mono); font-size:.64rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:14px;
+}
+
+/* ---- form controls: bigger than the rest of the app, on purpose.
+       A health worker fills these in on a phone, often outdoors. ---- */
+.field{display:block; margin-bottom:18px}
+.fieldlabel{
+  display:block; font-size:.8rem; font-weight:600; color:var(--ink-2);
+  margin-bottom:6px; letter-spacing:.01em;
+}
+.txt{
+  width:100%; padding:13px 14px; font:inherit; font-size:1rem;
+  border:1px solid var(--line-2); border-radius:7px;
+  background:var(--surface); color:var(--ink);
+}
+.txt:focus, .mobileinput:focus-within, .otpbox:focus{
+  outline:2px solid var(--crimson); outline-offset:1px; border-color:var(--crimson);
+}
+textarea.txt{font-family:inherit; resize:vertical}
+.mobileinput{
+  display:flex; align-items:stretch;
+  border:1px solid var(--line-2); border-radius:7px; background:var(--surface);
+  overflow:hidden;
+}
+.mobileinput .cc{
+  display:flex; align-items:center; padding:0 13px;
+  background:var(--surface-2); border-right:1px solid var(--line);
+  font-family:var(--f-mono); font-size:.95rem; color:var(--ink-2);
+}
+.mobileinput input{
+  flex:1; min-width:0; border:0; outline:0; background:transparent; color:var(--ink);
+  padding:13px 14px; font:inherit; font-size:1.05rem; letter-spacing:.04em;
+}
+button.primary.bigbtn{
+  width:100%; padding:14px 20px; font-size:1rem; margin-top:4px;
+}
+
+/* ---- account type tiles ---- */
+.roletiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px}
+.roletile{
+  text-align:left; font:inherit; color:inherit; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:8px;
+  padding:14px 15px; display:flex; flex-direction:column; gap:5px;
+  transition:border-color .15s, background .15s;
+}
+.roletile:hover{border-color:var(--crimson)}
+.roletile.on{border-color:var(--crimson); background:var(--crimson-soft); box-shadow:var(--shadow)}
+.roletile .rt{font-weight:600; font-size:.95rem}
+.roletile .rd{font-size:.78rem; color:var(--muted); line-height:1.35}
+.roletile.on .rd{color:var(--ink-2)}
+
+.verifyblock{
+  border:1px solid var(--line); border-left:3px solid var(--teal);
+  background:var(--surface-2); border-radius:7px; padding:15px 16px; margin-bottom:18px;
+}
+.verifynote{font-size:.8rem; color:var(--muted); margin:5px 0 14px}
+.verifyblock .field:last-of-type{margin-bottom:0}
+
+/* ---- OTP entry ---- */
+.otpprompt{font-size:.95rem; margin:0 0 16px; color:var(--ink-2)}
+.otprow{display:flex; gap:8px; margin-bottom:18px}
+.otpbox{
+  flex:1; min-width:0; aspect-ratio:1/1.15; max-width:58px;
+  text-align:center; font-family:var(--f-mono); font-size:1.5rem; font-weight:600;
+  border:1px solid var(--line-2); border-radius:8px;
+  background:var(--surface); color:var(--ink); padding:0;
+}
+.otpbox:disabled{opacity:.6}
+
+/* Confirmation that a real SMS was dispatched. There is no rule here for rendering a
+   code, because no component in this app can receive one. */
+.smssent{
+  display:flex; gap:10px; align-items:flex-start;
+  border:1px solid var(--teal); background:var(--teal-soft); color:var(--ink);
+  border-radius:7px; padding:12px 14px; margin-bottom:18px; font-size:.85rem;
+}
+.smsdot{
+  width:8px; height:8px; border-radius:50%; background:var(--teal);
+  flex:none; margin-top:7px;
+}
+.pendingbox{
+  border:1px solid var(--gold); background:var(--gold-soft); color:var(--ink);
+  border-radius:7px; padding:15px 16px; margin-bottom:16px; font-size:.9rem;
+}
+
+/* ---- reports ---- */
+.filterrow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px}
+.chip{
+  font:inherit; font-size:.82rem; cursor:pointer;
+  background:var(--surface); color:var(--ink-2);
+  border:1px solid var(--line); border-radius:20px; padding:6px 14px;
+}
+.chip:hover{background:var(--surface-2)}
+.chip.on{background:var(--ink); color:var(--ground); border-color:var(--ink)}
+
+.pill-refer{background:var(--crimson-soft); color:var(--crimson); border-color:var(--crimson)}
+.pill-clear{background:var(--teal-soft); color:var(--teal); border-color:var(--teal)}
+.pill-warn{background:var(--gold-soft); color:var(--gold); border-color:var(--gold)}
+.pill-done{background:var(--teal-soft); color:var(--teal); border-color:var(--teal)}
+.pill-pending{background:var(--surface-2); color:var(--muted)}
+
+.kv{display:flex; gap:12px; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--line); font-size:.88rem}
+.kv:last-child{border-bottom:0}
+.kvk{color:var(--muted)}
+.kvv{text-align:right; font-weight:500}
+
+/* ============================================================================
+   CareBridge — the patient accessibility layer.
+
+   Same tokens, same spacing scale, same card language as the rest of the app.
+   Three rules hold throughout this block:
+     · nothing is carried by colour alone — every state also has a word or a mark
+     · every interactive element has a visible focus ring and a ≥44px tap target
+     · every animation is inside the reduced-motion guard at the end
+   ============================================================================ */
+
+.cb-sronly{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* One focus treatment for the whole layer, so nothing can be tabbed to invisibly. */
+.cb-trigger:focus-visible, .cb-langrow:focus-visible, .cb-choice:focus-visible,
+.cb-segbtn:focus-visible, .cb-switch:focus-visible, .cb-speak:focus-visible,
+.cb-panelclose:focus-visible, .cb-bandlang:focus-visible, .cb-why summary:focus-visible,
+.cb-clinicaldetails summary:focus-visible{
+  outline:2px solid var(--crimson); outline-offset:2px; border-radius:7px;
+}
+
+/* ---- header control --------------------------------------------------- */
+.brandright{display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+.cb-control{position:relative}
+.cb-trigger{
+  display:inline-flex; align-items:center; gap:7px; min-height:38px;
+  font:inherit; font-size:.85rem; font-weight:600; cursor:pointer;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:20px; padding:6px 14px;
+}
+.cb-trigger:hover{border-color:var(--teal); background:var(--teal-soft)}
+.cb-triggervoice{font-size:.8rem}
+nav.tabs a.cb-navtab{border:1px solid var(--line-2); background:var(--surface)}
+nav.tabs a.cb-navtab.on{border-color:var(--teal); background:var(--teal-soft); color:var(--teal)}
+
+.cb-panel{
+  position:absolute; right:0; top:calc(100% + 8px); z-index:40; width:min(310px,88vw);
+  background:var(--surface); border:1px solid var(--line-2); border-radius:10px;
+  box-shadow:var(--shadow); padding:14px 16px 16px;
+}
+@media (max-width:640px){
+  /* On a phone the popover becomes a sheet: an anchored panel would fall off-screen. */
+  .cb-panel{position:fixed; right:12px; left:12px; top:auto; bottom:12px; width:auto; max-height:76vh; overflow:auto}
+}
+.cb-panelhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px}
+.cb-panelclose{
+  font:inherit; font-size:1rem; line-height:1; cursor:pointer; color:var(--muted);
+  background:none; border:0; padding:6px; border-radius:5px; min-width:32px; min-height:32px;
+}
+.cb-panelclose:hover{background:var(--surface-2); color:var(--ink)}
+.cb-group{border:0; padding:0; margin:0 0 16px}
+.cb-group:last-of-type{margin-bottom:12px}
+.cb-group legend{
+  font-size:.8rem; font-weight:600; color:var(--ink-2); padding:0; margin-bottom:8px;
+}
+.cb-panelnote{font-size:.76rem; color:var(--muted); margin:8px 0 0; line-height:1.4}
+.cb-panellink{
+  display:block; font-size:.8rem; color:var(--muted); text-decoration:none;
+  padding-top:11px; border-top:1px solid var(--line);
+}
+.cb-panellink:hover{color:var(--crimson); text-decoration:underline}
+
+.cb-langlist{display:flex; flex-direction:column; gap:4px}
+.cb-langrow{
+  display:grid; grid-template-columns:18px 1fr auto; align-items:center; gap:8px;
+  font:inherit; text-align:left; cursor:pointer; min-height:44px;
+  background:var(--surface); color:var(--ink);
+  border:1px solid transparent; border-radius:7px; padding:8px 10px;
+}
+.cb-langrow:hover{background:var(--surface-2)}
+.cb-langrow.on{border-color:var(--teal); background:var(--teal-soft)}
+.cb-tick{color:var(--teal); font-weight:700}
+.cb-langnative{font-size:.98rem; font-weight:600}
+.cb-langen{font-size:.72rem; color:var(--muted)}
+
+/* ---- switch and segmented control ------------------------------------- */
+.cb-switch{
+  display:inline-flex; align-items:center; gap:9px; min-height:40px;
+  font:inherit; font-size:.86rem; cursor:pointer; color:var(--ink);
+  background:none; border:0; padding:4px 2px;
+}
+.cb-switchtrack{
+  width:38px; height:22px; border-radius:11px; background:var(--surface-2);
+  border:1px solid var(--line-2); position:relative; flex:none; transition:background .15s;
+}
+.cb-switchtrack > span{
+  position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%;
+  background:var(--muted); transition:transform .15s, background .15s;
+}
+.cb-switch.on .cb-switchtrack{background:var(--teal-soft); border-color:var(--teal)}
+.cb-switch.on .cb-switchtrack > span{transform:translateX(16px); background:var(--teal)}
+
+.cb-seg{
+  display:inline-flex; gap:3px; padding:3px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--line);
+}
+.cb-segbtn{
+  font:inherit; font-size:.84rem; font-weight:600; cursor:pointer; min-height:36px;
+  background:none; color:var(--ink-2); border:0; border-radius:6px; padding:7px 16px;
+}
+.cb-segbtn:hover{color:var(--ink)}
+.cb-segbtn.on{background:var(--surface); color:var(--ink); box-shadow:var(--shadow)}
+.cb-seg.big .cb-segbtn{font-size:.92rem; padding:10px 22px; min-height:44px}
+
+/* ---- the welcome / language choice card -------------------------------- */
+.cb-welcome{
+  border:1px solid var(--teal); background:var(--surface); border-radius:12px;
+  box-shadow:var(--shadow); padding:26px 26px 22px; margin:20px 0 24px;
+  border-top:3px solid var(--teal);
+}
+.cb-welcome.compact{padding:20px}
+.cb-welcomeinner{max-width:640px; margin:0 auto}
+.cb-welcome h2{
+  font-family:var(--f-display); font-weight:500; letter-spacing:-.015em;
+  font-size:clamp(1.35rem,3.4vw,1.85rem); margin:8px 0 6px; line-height:1.15;
+}
+.cb-welcomesub{color:var(--ink-2); font-size:.95rem; margin:0 0 18px; max-width:46ch}
+.cb-choices{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px}
+.cb-choice{
+  display:grid; grid-template-columns:1fr auto; align-items:center; gap:4px 10px;
+  font:inherit; text-align:left; cursor:pointer; min-height:62px;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:10px; padding:12px 15px;
+  transition:border-color .15s, background .15s;
+}
+.cb-choice:hover{border-color:var(--teal)}
+.cb-choice.on{border-color:var(--teal); background:var(--teal-soft); box-shadow:var(--shadow)}
+.cb-choicenative{font-size:1.12rem; font-weight:600; line-height:1.3}
+.cb-choiceen{grid-column:1; font-size:.74rem; color:var(--muted); letter-spacing:.02em}
+.cb-choicemark{grid-row:1/3; grid-column:2; color:var(--teal); font-size:1.1rem; font-weight:700}
+.cb-welcomefoot{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:16px;
+  padding-top:14px; border-top:1px solid var(--line); font-size:.82rem;
+}
+.cb-voiceflag{color:var(--teal); font-weight:600}
+.cb-welcomehint{color:var(--muted); flex:1 1 auto}
+
+/* ---- listen button ----------------------------------------------------- */
+.cb-speak{
+  display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-top:14px;
+  font:inherit; font-size:.9rem; font-weight:600; cursor:pointer;
+  background:var(--surface); color:var(--teal);
+  border:1px solid var(--teal); border-radius:22px; padding:10px 20px;
+}
+.cb-speak:hover{background:var(--teal-soft)}
+.cb-speak.on{background:var(--teal); color:var(--surface); border-color:var(--teal)}
+.cb-speak.small{font-size:.82rem; padding:7px 15px; min-height:38px}
+.cb-speakdots{
+  width:7px; height:7px; border-radius:50%; background:currentColor;
+  animation:cb-pulse 1s ease-in-out infinite;
+}
+@keyframes cb-pulse{0%,100%{opacity:.25}50%{opacity:1}}
+.cb-voicenote{
+  font-size:.8rem; color:var(--muted); margin:14px 0 0;
+  border-left:2px solid var(--line-2); padding-left:10px;
+}
+
+/* ---- "why am I seeing this?" ------------------------------------------- */
+.cb-why{margin-top:16px; border-top:1px solid var(--line); padding-top:12px}
+.cb-why summary{
+  cursor:pointer; font-size:.84rem; color:var(--ink-2); font-weight:500;
+  list-style:none; padding:6px 0; min-height:32px;
+}
+.cb-why summary::-webkit-details-marker{display:none}
+.cb-why summary:hover{color:var(--crimson)}
+.cb-why p{font-size:.84rem; color:var(--muted); margin:4px 0 0; max-width:70ch; line-height:1.55}
+
+/* ---- result hero ------------------------------------------------------- */
+.cb-results{display:flex; flex-direction:column; gap:16px; margin-top:20px}
+.cb-hero{
+  display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;
+  border:1px solid; border-radius:10px; padding:22px 24px;
+}
+.cb-hero.refer{background:var(--crimson-soft); border-color:var(--crimson)}
+.cb-hero.clear{background:var(--teal-soft); border-color:var(--teal)}
+.cb-hero.reject{background:var(--gold-soft); border-color:var(--gold)}
+.cb-hero h2{
+  font-family:var(--f-display); font-weight:600; font-size:clamp(1.25rem,3vw,1.7rem);
+  margin:4px 0 6px; line-height:1.2; letter-spacing:-.01em;
+}
+.cb-hero.refer h2{color:var(--crimson)}
+.cb-hero.clear h2{color:var(--teal)}
+.cb-hero.reject h2{color:var(--gold)}
+.cb-heroline{margin:0; font-size:.92rem; color:var(--ink); max-width:52ch}
+.cb-heroicon{font-size:2rem; line-height:1; flex:none}
+.cb-heroscore{
+  font-size:.7rem; color:var(--ink-2); text-align:right; display:flex;
+  flex-direction:column; gap:3px;
+}
+.cb-heroscore strong{font-size:1.5rem; font-family:var(--f-display); font-weight:600}
+.cb-gradebox{text-align:right; min-width:170px}
+.cb-gradeword{font-size:.86rem; font-weight:600; margin-top:2px}
+.cb-gradelabel{font-size:.86rem; color:var(--ink-2); max-width:24ch; margin-left:auto}
+.cb-gradetech{font-size:.7rem; color:var(--muted); margin-top:6px; max-width:26ch; margin-left:auto}
+
+.cb-levelrow{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+  padding:4px 2px;
+}
+.cb-label{font-size:.78rem; font-weight:600; color:var(--ink-2); letter-spacing:.01em}
+.cb-hint{font-size:.78rem; color:var(--muted)}
+
+/* ---- result sections --------------------------------------------------- */
+.cb-section{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:20px 22px; box-shadow:var(--shadow);
+}
+.cb-section .card{box-shadow:none; background:var(--surface-2); margin-top:12px}
+.cb-h{
+  font-family:var(--f-display); font-weight:500; font-size:1.2rem;
+  margin:6px 0 8px; letter-spacing:-.01em;
+}
+.cb-lede{color:var(--ink-2); font-size:.92rem; margin:0 0 4px; max-width:70ch}
+/* The one sentence the whole feature exists for. It is allowed to be bigger. */
+.cb-explain{font-size:1.05rem; line-height:1.65; color:var(--ink); max-width:66ch; margin:8px 0 0}
+.cb-note{font-size:.78rem; color:var(--muted); margin:12px 0 0; max-width:74ch; line-height:1.5}
+.cb-tech{font-size:.74rem; color:var(--muted); margin:8px 0 0; max-width:74ch; line-height:1.5}
+.cb-scanref{font-size:.7rem; color:var(--muted); margin:14px 0 0}
+.cb-instruction{margin-top:14px}
+
+.cb-clinical{display:flex; flex-direction:column; gap:14px; margin-top:14px}
+.cb-clinicaldetails{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:16px 20px; box-shadow:var(--shadow);
+}
+.cb-clinicaldetails > summary{
+  cursor:pointer; list-style:none; display:flex; flex-direction:column; gap:3px;
+  min-height:44px; justify-content:center;
+}
+.cb-clinicaldetails > summary::-webkit-details-marker{display:none}
+.cb-clinicaldetails > summary .cb-h{margin:0; font-size:1.05rem}
+.cb-clinicaldetails[open] > summary{border-bottom:1px solid var(--line); padding-bottom:10px}
+
+/* ---- what should I do now? --------------------------------------------- */
+.cb-actions{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin-top:14px}
+.cb-action{
+  display:flex; gap:12px; align-items:flex-start;
+  border:1px solid var(--line); border-radius:9px; background:var(--surface-2); padding:15px 16px;
+}
+.cb-action.urgent{border-color:var(--crimson); background:var(--crimson-soft)}
+.cb-actionicon{font-size:1.3rem; line-height:1.2; flex:none}
+.cb-action h4{margin:4px 0 5px; font-size:.98rem}
+.cb-action p{margin:0; font-size:.86rem; color:var(--ink-2); line-height:1.5}
+.cb-action button.ghost{margin-top:10px; min-height:40px}
+.cb-tag{
+  display:inline-block; font-family:var(--f-mono); font-size:.6rem; letter-spacing:.08em;
+  text-transform:uppercase; padding:2px 7px; border-radius:3px; border:1px solid;
+}
+.cb-tag.urgent{color:var(--crimson); border-color:var(--crimson); background:var(--surface)}
+.cb-tag.routine{color:var(--muted); border-color:var(--line-2); background:var(--surface)}
+
+/* ---- nutrition --------------------------------------------------------- */
+.cb-personalize{margin-top:18px; padding-top:14px; border-top:1px solid var(--line)}
+.cb-personalizehead{display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline; margin-bottom:10px}
+.cb-foodgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; margin-top:6px}
+.cb-foodcol{border:1px solid var(--line); border-radius:9px; padding:14px 16px; background:var(--surface)}
+.cb-foodcol.good{border-left:3px solid var(--teal)}
+.cb-foodcol.limit{border-left:3px solid var(--gold)}
+.cb-foodcol h4{margin:0 0 8px; font-size:.92rem}
+.cb-foodcol.good h4{color:var(--teal)}
+.cb-foodcol.limit h4{color:var(--gold)}
+.cb-foodcol ul{margin:0; padding-left:18px; font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.cb-tworow{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin-top:12px}
+.cb-minicard{border:1px solid var(--line); border-radius:9px; padding:14px 16px; background:var(--surface-2)}
+.cb-minicard h4{margin:0 0 5px; font-size:.92rem}
+.cb-minicard p{margin:0; font-size:.85rem; color:var(--ink-2); line-height:1.5}
+
+/* ---- the CareBridge page and landing band ------------------------------ */
+.cb-pagehero{padding-block:30px 26px; border-bottom:1px solid var(--line)}
+.cb-pagehero h2{
+  font-family:var(--f-display); font-weight:500; letter-spacing:-.015em;
+  font-size:clamp(1.7rem,4.4vw,2.5rem); line-height:1.1; margin:10px 0 12px; max-width:20ch;
+}
+.cb-pagehero .cb-lede{font-size:1.02rem; margin-bottom:20px}
+.cb-journey{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;
+  list-style:none; padding:0; margin:0;
+}
+.cb-journey li{background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:15px 16px}
+.cb-journeyicon{font-size:1.25rem}
+.cb-journeystep{display:block; font-size:.64rem; letter-spacing:.12em; color:var(--teal); margin-top:6px}
+.cb-journey h4{margin:4px 0 5px; font-size:.98rem}
+.cb-journey p{margin:0; font-size:.84rem; color:var(--ink-2); line-height:1.5}
+.cb-prefsrow{display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center}
+.cb-futurestep{border-style:dashed}
+.cb-futurestep .n{color:var(--muted)}
+
+.cb-band{border-top:1px solid var(--line)}
+.cb-bandrow{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; align-items:start}
+.cb-bandlangs{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px}
+.cb-bandlang{
+  display:flex; flex-direction:column; gap:2px; text-align:left; font:inherit;
+  cursor:pointer; min-height:56px; justify-content:center;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:9px; padding:10px 13px;
+}
+.cb-bandlang:hover{border-color:var(--teal)}
+.cb-bandlang.on{border-color:var(--teal); background:var(--teal-soft)}
+.cb-bandlist{margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px}
+.cb-bandlist li{font-size:.88rem; color:var(--ink-2); display:flex; gap:9px; align-items:flex-start}
+
+/* ---- WhatsApp report delivery ------------------------------------------
+   The last step of the patient journey, styled with the same tokens as every
+   other CareBridge section. Teal is the project's "this is resolved" colour and
+   is reused here rather than importing WhatsApp's own brand green, which would
+   read as an advert inside a clinical page. */
+.cb-whatsapp{border-left:3px solid var(--teal)}
+.cb-whatsapp.sent{border-color:var(--teal); background:linear-gradient(180deg,var(--teal-soft) 0,var(--surface) 90px)}
+
+.cb-wajourney{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px 4px;
+  list-style:none; margin:14px 0 0; padding:0;
+}
+.cb-wajourney li{
+  display:flex; align-items:center; gap:7px;
+  border:1px solid var(--line); border-radius:999px; padding:5px 13px 5px 10px;
+  background:var(--surface-2); color:var(--muted); font-size:.76rem; white-space:nowrap;
+}
+.cb-wajourney li.done{border-color:var(--teal); background:var(--teal-soft); color:var(--teal); font-weight:600}
+.cb-wajourney li + li::before{
+  content:"→"; color:var(--line-2); margin-right:3px; font-size:.8rem;
+}
+.cb-wastep{font-size:.92rem; line-height:1}
+.cb-walabel{letter-spacing:.01em}
+
+.cb-wacard{
+  margin-top:16px; border:1px solid var(--line); border-radius:10px;
+  background:var(--surface-2); padding:16px 18px;
+  display:flex; flex-direction:column; gap:12px;
+}
+.cb-warow{display:flex; align-items:center; gap:13px}
+.cb-waicon{
+  display:flex; align-items:center; justify-content:center; flex:none;
+  width:42px; height:42px; border-radius:11px; font-size:1.25rem;
+  background:var(--teal-soft); border:1px solid var(--teal);
+}
+.cb-wato{display:flex; flex-direction:column; gap:2px; min-width:0}
+.cb-wanumber{font-size:1.02rem; letter-spacing:.04em; color:var(--ink)}
+
+.cb-wasend{
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; min-height:48px; padding:12px 22px;
+  border:0; border-radius:9px; cursor:pointer;
+  background:var(--teal); color:var(--surface);
+  font:inherit; font-size:.98rem; font-weight:600; letter-spacing:.01em;
+  box-shadow:var(--shadow); transition:filter .15s, transform .08s;
+}
+.cb-wasend:hover:not(:disabled){filter:brightness(1.08)}
+.cb-wasend:active:not(:disabled){transform:translateY(1px)}
+.cb-wasend:disabled{opacity:.62; cursor:progress; box-shadow:none}
+.cb-wasend:focus-visible{outline:2px solid var(--crimson); outline-offset:3px}
+
+.cb-wastatus{margin:0; font-size:.82rem; color:var(--muted); line-height:1.5; text-align:center}
+.cb-waerror{color:var(--crimson); font-weight:500}
+
+.cb-wasuccess{display:flex; gap:13px; align-items:flex-start}
+.cb-watick{
+  display:flex; align-items:center; justify-content:center; flex:none;
+  width:36px; height:36px; border-radius:50%;
+  background:var(--teal); color:var(--surface); font-size:1.05rem; font-weight:700;
+}
+.cb-wasuccess h4{margin:2px 0 5px; font-size:1.02rem; color:var(--teal)}
+.cb-wasuccess p{margin:0 0 3px; font-size:.88rem; color:var(--ink-2)}
+.cb-wasuccess .cb-note{margin-top:8px}
+
+@media (max-width:520px){
+  .cb-wajourney li{font-size:.7rem; padding:4px 10px 4px 8px}
+  .cb-wajourney li + li::before{margin-right:1px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cb-wasend{transition:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cb-speakdots{animation:none; opacity:1}
+  .cb-choice, .cb-trigger, .cb-switchtrack, .cb-switchtrack > span, .cb-bandlang{transition:none}
+}
+
+/* ============ 📍 Smart Care Finder ======================================
+   The step after the result. Same tokens, same card language and same
+   spacing scale as every other CareBridge section — teal for "this is
+   where you go next", crimson reserved for the clinical result above.
+
+   Nothing here is a Google Maps look: the tiles sit inside a CareBridge
+   card, the pins use the project palette, and the list is styled as a
+   first-class view rather than as a fallback. */
+.cf{border-left:3px solid var(--teal)}
+/* Grade 2+ / clinician review. A stronger edge and a tinted head — the
+   feature is more prominent without any wording becoming more alarming. */
+.cf.prominent{border-left-color:var(--crimson)}
+.cf.prominent .cf-head{background:var(--crimson-soft); border-color:var(--crimson)}
+.cf.prominent .cf-headicon{background:var(--surface); border-color:var(--crimson)}
+
+.cf-head{
+  display:flex; gap:14px; align-items:flex-start; margin-top:16px;
+  border:1px solid var(--line); border-radius:10px;
+  background:var(--surface-2); padding:15px 17px;
+}
+.cf-headicon{
+  display:flex; align-items:center; justify-content:center; flex:none;
+  width:42px; height:42px; border-radius:11px; font-size:1.2rem;
+  background:var(--teal-soft); border:1px solid var(--teal);
+}
+.cf-headtext h4{
+  margin:0 0 4px; font-family:var(--f-display); font-weight:600; font-size:1.08rem;
+}
+.cf-headtext p{margin:0; font-size:.9rem; color:var(--ink-2); line-height:1.5; max-width:62ch}
+
+/* ---- the one button that asks for a location --------------------------- */
+.cf-start{margin-top:14px; display:flex; flex-direction:column; gap:10px}
+.cf-cta{
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; min-height:48px; padding:12px 22px;
+  border:0; border-radius:9px; cursor:pointer;
+  background:var(--teal); color:var(--surface);
+  font:inherit; font-size:.98rem; font-weight:600; letter-spacing:.01em;
+  box-shadow:var(--shadow); transition:filter .15s, transform .08s;
+}
+.cf.prominent .cf-cta{background:var(--crimson)}
+.cf-cta:hover:not(:disabled){filter:brightness(1.08)}
+.cf-cta:active:not(:disabled){transform:translateY(1px)}
+.cf-cta:disabled{opacity:.62; cursor:progress; box-shadow:none}
+.cf-cta:focus-visible{outline:2px solid var(--crimson); outline-offset:3px}
+
+.cf-status{margin:0; font-size:.82rem; color:var(--muted); line-height:1.5; text-align:center}
+.cf-error{color:var(--crimson); font-weight:500}
+.cf-privacy{color:var(--muted)}
+
+/* ---- manual city / area search ----------------------------------------- */
+.cf-manual{margin-top:12px; border-top:1px solid var(--line); padding-top:10px}
+.cf-manual > summary{
+  cursor:pointer; font-size:.86rem; color:var(--ink-2); font-weight:600;
+  list-style:none; padding:8px 0; min-height:40px; display:flex; align-items:center;
+}
+.cf-manual > summary::-webkit-details-marker{display:none}
+.cf-manual > summary::before{content:"🔎 "; margin-right:7px}
+.cf-manual > summary:hover{color:var(--crimson)}
+.cf-manualform{padding-bottom:6px}
+.cf-manuallabel{display:block; font-size:.82rem; color:var(--muted); margin-bottom:7px}
+.cf-manualrow{display:flex; flex-wrap:wrap; gap:8px}
+.cf-manualrow input{
+  flex:1 1 200px; min-height:44px; padding:10px 12px; font:inherit; font-size:.92rem;
+  border:1px solid var(--line-2); border-radius:7px;
+  background:var(--surface); color:var(--ink);
+}
+.cf-manualrow input:focus-visible{outline:2px solid var(--teal); outline-offset:1px}
+.cf-manualrow button{min-height:44px}
+
+/* ---- results header and the Map / List switch -------------------------- */
+.cf-results{margin-top:18px}
+.cf-resulthead{
+  display:flex; flex-wrap:wrap; gap:10px 16px; align-items:flex-end;
+  justify-content:space-between; margin-bottom:12px;
+}
+.cf-resulttitle{
+  margin:0 0 3px; font-family:var(--f-display); font-weight:600; font-size:1.05rem;
+}
+.cf-viewtabs{
+  display:inline-flex; gap:3px; padding:3px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--line);
+}
+.cf-viewtab{
+  font:inherit; font-size:.84rem; font-weight:600; cursor:pointer; min-height:38px;
+  background:none; color:var(--ink-2); border:0; border-radius:6px; padding:7px 15px;
+}
+.cf-viewtab:hover{color:var(--ink)}
+.cf-viewtab.on{background:var(--surface); color:var(--ink); box-shadow:var(--shadow)}
+
+/* ---- the two synchronised panes ---------------------------------------- */
+.cf-split{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:14px}
+.cf-pane{min-width:0}
+.cf-selecthint{margin:0 0 8px}
+
+.cf-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;
+  max-height:520px; overflow-y:auto}
+.cf-card{border:1px solid var(--line); border-radius:9px; background:var(--surface-2); overflow:hidden}
+.cf-card.on{border-color:var(--teal); background:var(--teal-soft); box-shadow:var(--shadow)}
+.cf-cardhead{
+  display:grid; grid-template-columns:28px 1fr 16px; gap:11px; align-items:start;
+  width:100%; text-align:left; font:inherit; color:inherit; cursor:pointer;
+  background:none; border:0; padding:13px 14px; min-height:60px;
+}
+.cf-cardhead:hover{background:rgba(15,97,87,.06)}
+.cf-cardhead:focus-visible{outline:2px solid var(--teal); outline-offset:-2px}
+.cf-cardnum{
+  display:flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:50%; flex:none; margin-top:1px;
+  background:var(--surface); border:1px solid var(--line-2);
+  font-family:var(--f-mono); font-size:.72rem; font-weight:600; color:var(--ink-2);
+}
+.cf-card.on .cf-cardnum{background:var(--teal); border-color:var(--teal); color:#fff}
+.cf-cardmain{display:flex; flex-direction:column; gap:3px; min-width:0}
+.cf-cardname{font-size:.95rem; font-weight:600; line-height:1.3}
+.cf-cardmeta{font-size:.8rem; color:var(--ink-2)}
+.cf-cardmark{color:var(--muted); font-size:.8rem; margin-top:3px}
+.cf-open{color:var(--teal); font-weight:600}
+.cf-shut{color:var(--gold); font-weight:600}
+
+.cf-badges{display:flex; flex-wrap:wrap; gap:5px; list-style:none; margin:4px 0 0; padding:0}
+.cf-badge{
+  font-family:var(--f-mono); font-size:.6rem; letter-spacing:.06em; text-transform:uppercase;
+  padding:2px 7px; border-radius:3px; border:1px solid var(--line-2);
+  background:var(--surface); color:var(--muted);
+}
+.cf-badge-eye_focused{border-color:var(--teal); color:var(--teal)}
+.cf-badge-open_now{border-color:var(--teal); color:var(--teal)}
+.cf-badge-highly_rated{border-color:var(--gold); color:var(--gold)}
+
+/* ---- facility details --------------------------------------------------- */
+.cf-details{
+  padding:2px 14px 14px 53px; display:flex; flex-direction:column; gap:7px;
+  border-top:1px solid var(--line);
+}
+.cf-details.compact{padding:10px 0 0; border-top:0}
+.cf-detailrow{display:flex; gap:9px; align-items:flex-start; margin:0; font-size:.86rem; color:var(--ink-2); line-height:1.5}
+.cf-detailicon{flex:none; width:18px; text-align:center}
+.cf-detaillabel{color:var(--muted)}
+.cf-details a{color:var(--crimson)}
+.cf-directions{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  align-self:flex-start; margin-top:6px; min-height:44px; padding:11px 20px;
+  border-radius:8px; text-decoration:none; font-size:.9rem; font-weight:600;
+  background:var(--teal); color:#fff !important; border:1px solid var(--teal);
+}
+.cf-directions:hover{filter:brightness(1.08)}
+.cf-directions:focus-visible{outline:2px solid var(--crimson); outline-offset:2px}
+.cf-approx{margin-top:4px !important; font-size:.72rem}
+
+/* ---- the map ------------------------------------------------------------ */
+.cf-map{
+  height:440px; width:100%; border-radius:9px; overflow:hidden;
+  border:1px solid var(--line); background:var(--surface-2);
+}
+.cf-map:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+.cf-mapfail{
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  min-height:140px; border:1px dashed var(--line-2); border-radius:9px;
+  background:var(--surface-2); padding:18px;
+}
+/* Leaflet's own chrome, brought into the project's palette. */
+.cf-map .leaflet-container{font:inherit; background:var(--surface-2)}
+.cf-map .leaflet-control-attribution{
+  background:var(--surface); color:var(--muted); font-size:.62rem;
+}
+.cf-map .leaflet-control-attribution a{color:var(--muted)}
+.cf-map .leaflet-bar a{
+  background:var(--surface); color:var(--ink); border-bottom-color:var(--line);
+}
+.cf-map .leaflet-bar a:hover{background:var(--surface-2)}
+
+.cf-pin{
+  display:block; width:30px; height:38px; position:relative; cursor:pointer;
+}
+.cf-pin::after{
+  content:""; position:absolute; left:50%; top:26px; transform:translateX(-50%);
+  border-left:5px solid transparent; border-right:5px solid transparent;
+  border-top:10px solid var(--ink-2);
+}
+.cf-pinnum{
+  display:flex; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:50%;
+  background:var(--surface); border:2px solid var(--ink-2); color:var(--ink);
+  font-family:var(--f-mono); font-size:.74rem; font-weight:700;
+  box-shadow:0 1px 4px rgba(0,0,0,.35);
+}
+.cf-pin.on .cf-pinnum{background:var(--teal); border-color:var(--teal); color:#fff; transform:scale(1.14)}
+.cf-pin.on::after{border-top-color:var(--teal)}
+.leaflet-marker-icon:focus-visible .cf-pinnum{outline:2px solid var(--crimson); outline-offset:2px}
+
+.cf-you{display:flex; align-items:center; justify-content:center; width:22px; height:22px;
+  border-radius:50%; background:rgba(168,50,42,.22); border:1px solid var(--crimson)}
+.cf-youdot{width:10px; height:10px; border-radius:50%; background:var(--crimson);
+  border:2px solid #fff}
+.cf-youlegend{
+  display:flex; align-items:center; gap:7px; flex-wrap:wrap;
+  margin:9px 0 0; font-size:.78rem; color:var(--ink-2);
+}
+.cf-youchip{
+  width:12px; height:12px; border-radius:50%; flex:none;
+  background:var(--crimson); border:2px solid var(--crimson-soft);
+}
+
+/* The map's own detail card. On a wide screen the selected facility's card is already
+   expanded in the list beside it, so this would be the same facts twice. */
+.cf-mapdetail{display:none}
+.cf-mapdetail h5{margin:0; font-size:.98rem; font-weight:600}
+
+/* ---- empty state, radius expansion, footers ----------------------------- */
+.cf-empty{
+  border:1px dashed var(--line-2); border-radius:9px; background:var(--surface-2);
+  padding:18px 20px; text-align:center;
+}
+.cf-empty h4{margin:0 0 6px; font-size:1rem}
+.cf-empty p{margin:0; font-size:.88rem; color:var(--ink-2); max-width:56ch; margin-inline:auto}
+
+.cf-radiusrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center}
+.cf-radius{
+  font:inherit; font-size:.82rem; font-weight:600; cursor:pointer; min-height:40px;
+  padding:9px 15px; border-radius:20px;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2);
+}
+.cf-radius:hover:not(:disabled){border-color:var(--teal); color:var(--teal)}
+.cf-radius.on{border-color:var(--teal); background:var(--teal-soft); color:var(--teal)}
+.cf-radius:disabled{opacity:.5; cursor:not-allowed}
+.cf-restart{
+  font:inherit; font-size:.82rem; cursor:pointer; min-height:40px; padding:9px 12px;
+  background:none; border:0; color:var(--muted); text-decoration:underline;
+}
+.cf-restart:hover{color:var(--crimson)}
+.cf-foot{margin-top:16px !important}
+.cf-attrib{margin-top:4px !important; font-size:.72rem}
+
+/* ---- responsive: one pane at a time on a phone -------------------------- */
+@media (max-width:860px){
+  .cf-split{grid-template-columns:1fr}
+  /* The Map / List switch becomes real: both panes exist in the markup, one is shown.
+     The list is the default, because it is the view that always works. */
+  .cf-split[data-view="list"] .cf-mappane{display:none}
+  .cf-split[data-view="map"] .cf-listpane{display:none}
+  .cf-mapdetail{
+    display:block; margin-top:10px; padding:13px 15px;
+    border:1px solid var(--teal); border-radius:9px; background:var(--teal-soft);
+  }
+  .cf-map{height:340px}
+  .cf-list{max-height:none}
+}
+@media (min-width:861px){
+  /* Both panes are visible side by side, so the tabs are decoration. They stay in the
+     markup for the tabpanel relationship and are hidden from sight only. */
+  .cf-viewtabs{display:none}
+  .cf-split[data-view] .cf-mappane,
+  .cf-split[data-view] .cf-listpane{display:block}
+}
+@media (max-width:520px){
+  .cf-details{padding-left:14px}
+  .cf-head{flex-direction:column; gap:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cf-cta{transition:none}
+  .cf-pin.on .cf-pinnum{transform:none}
+}
+
+/* Announced, not displayed. The live region below the button carries the result count
+   for a screen reader; the same count is on screen in the results header. */
+.cf-sronly{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+/* Leaflet's zoom buttons ship at 26px, or 30px in its touch mode. On a phone that is a
+   miss waiting to happen. The extra class is specificity: leaflet.css is injected after
+   this file, and `.leaflet-touch .leaflet-bar a` would otherwise win on source order. */
+.cf-map.leaflet-container .leaflet-bar a{
+  width:38px; height:38px; line-height:38px; font-size:1.1rem;
+}
+
+/* ===================================================================
+   CareBridge Eye Health Passport — the longitudinal surfaces.
+
+   Colour rule for this whole block: the grade's status colour (the product's existing
+   teal / gold / crimson verdict palette) is ALWAYS redundant. Every place a tone is
+   applied, the grade number and its severity label are also printed, so the record is
+   readable with no colour perception at all, in forced-colors mode, and in print.
+   =================================================================== */
+
+/* Grade -> tone. One definition, used by the chart, the cards and the journey. */
+.tone-clear{--pp-tone:var(--teal);   --pp-tone-soft:var(--teal-soft)}
+.tone-warn {--pp-tone:var(--gold);   --pp-tone-soft:var(--gold-soft)}
+.tone-refer{--pp-tone:var(--crimson);--pp-tone-soft:var(--crimson-soft)}
+.tone-none {--pp-tone:var(--muted);  --pp-tone-soft:var(--surface-2)}
+
+/* ---- page header ---- */
+.pp-head{
+  display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
+  flex-wrap:wrap; margin-bottom:18px;
+}
+.pp-title{font-family:var(--f-display);font-weight:500;font-size:1.6rem;margin:4px 0 4px}
+.pp-count{font-size:.78rem;color:var(--muted)}
+.pp-empty{max-width:560px;margin-top:20px}
+.pp-empty h2{font-family:var(--f-display);font-weight:500;margin:6px 0 8px}
+.pp-empty .cta{margin-top:14px;display:inline-block}
+
+/* ---- returning-patient banner ---- */
+.pp-returning{
+  display:flex; gap:14px; align-items:flex-start;
+  border:1px solid var(--teal); background:var(--teal-soft);
+  border-radius:9px; padding:14px 16px; margin-bottom:18px;
+}
+.pp-returning h3{margin:4px 0 6px;font-size:1rem;font-weight:600;color:var(--ink)}
+.pp-returning p{margin:0;font-size:.87rem;color:var(--ink-2)}
+.pp-reticon{font-size:1.5rem;line-height:1}
+.pp-retcta{
+  margin-left:auto; white-space:nowrap; align-self:center;
+  padding:8px 14px; border:1px solid var(--line-2); border-radius:6px;
+  background:var(--surface); color:var(--ink); text-decoration:none; font-size:.84rem;
+}
+
+/* ---- the ICDR grade timeline ---- */
+.pp-figure{margin:0}
+.pp-chart{width:100%;height:auto;display:block;overflow:visible}
+/* Recessive by design: the data is the subject, the scaffolding is not. */
+.pp-grid{stroke:var(--line);stroke-width:1}
+.pp-axis{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+/* 2px line, and the step is drawn square because a category change is instantaneous. */
+.pp-line{stroke:var(--ink-2);stroke-width:2;stroke-linejoin:miter;stroke-linecap:butt}
+.pp-hit{fill:transparent}
+/* The 2px surface ring is what keeps two markers legible where they overlap. */
+.pp-dot{fill:var(--pp-tone);stroke:var(--surface);stroke-width:2}
+.pp-dot.hollow{fill:var(--surface);stroke:var(--muted);stroke-width:2;stroke-dasharray:3 2}
+.pp-plabel{fill:var(--ink);font-family:var(--f-mono);font-size:10px;font-weight:600}
+.pp-point{cursor:pointer;outline:none}
+.pp-point .pp-dot{transition:r .12s ease}
+.pp-point:hover .pp-dot,.pp-point.on .pp-dot{r:9}
+/* Keyboard focus has to be visible on an SVG too. */
+.pp-point:focus-visible .pp-dot{stroke:var(--ink);stroke-width:3}
+.pp-readout{font-size:.84rem;margin:10px 0 2px;min-height:1.4em;color:var(--ink-2)}
+.pp-caption{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);margin-top:2px}
+
+/* ---- the comparison card ---- */
+.pp-comparison .pp-sides{
+  display:grid; grid-template-columns:1fr auto 1fr; gap:12px;
+  align-items:stretch; margin-top:12px;
+}
+.pp-side{
+  border:1px solid var(--pp-tone); background:var(--pp-tone-soft);
+  border-radius:8px; padding:12px 14px;
+}
+.pp-sidegrade{display:flex;gap:10px;align-items:baseline;margin-top:6px}
+.pp-gradenum{font-family:var(--f-display);font-size:2.2rem;line-height:1;font-weight:600;color:var(--ink)}
+.pp-gradelabel{font-size:.88rem;color:var(--ink)}
+.pp-sidedate{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted);margin-top:8px}
+.pp-arrow{align-self:center;font-size:1.5rem;color:var(--muted)}
+.pp-change{
+  display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
+  margin-top:14px; padding:12px 14px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--line);
+}
+.pp-change.dir-higher{background:var(--gold-soft);border-color:var(--gold)}
+.pp-change.dir-lower{background:var(--teal-soft);border-color:var(--teal)}
+.pp-changeno{font-family:var(--f-mono);font-size:1.15rem;color:var(--ink)}
+.pp-delta{margin-left:10px;font-weight:700}
+.pp-changelabel{font-size:.9rem;color:var(--ink)}
+.pp-statement{font-size:.95rem;color:var(--ink);margin:12px 0 0;line-height:1.5}
+.pp-interval{margin-top:8px;font-size:.74rem}
+/* The caveat is part of the card, never a footnote somewhere else on the page. */
+.pp-caveat{
+  font-size:.78rem; color:var(--muted); margin:12px 0 0;
+  padding-top:10px; border-top:1px solid var(--line);
+}
+.pp-comparison.none{border-left:3px solid var(--line-2)}
+
+/* ---- the follow-up card ---- */
+.pp-followup{border-left:3px solid var(--pp-pri,var(--line-2))}
+.pp-followup.pri-routine{--pp-pri:var(--teal)}
+.pp-followup.pri-soon{--pp-pri:var(--gold)}
+.pp-followup.pri-prompt,.pp-followup.pri-urgent{--pp-pri:var(--crimson)}
+.pp-furow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 8px}
+.pp-fuwindow{font-size:1rem;color:var(--ink)}
+.pp-pri{border-color:var(--pp-pri);color:var(--pp-pri)}
+.pp-remind{margin-top:14px}
+.pp-remind .cb-note{margin-top:8px}
+.pp-dlrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}
+
+/* ---- the eye health journey ---- */
+.pp-steps{list-style:none;margin:14px 0 0;padding:0}
+.pp-step{position:relative;padding:0 0 4px 52px;margin-bottom:6px}
+.pp-stepmark{
+  position:absolute; left:0; top:0; width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--f-display); font-size:1.15rem; font-weight:600;
+  background:var(--pp-tone-soft); color:var(--ink);
+  border:1.5px solid var(--pp-tone);
+}
+.pp-stepbody{padding-bottom:6px}
+.pp-stepdate{display:block;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.pp-stepgrade{font-size:.95rem;color:var(--ink);margin-top:2px}
+.pp-steptags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.pp-stepchange{
+  display:inline-block; margin-top:8px; font-size:.82rem;
+  padding:3px 9px; border-radius:4px;
+  background:var(--surface-2); border:1px solid var(--line); color:var(--ink);
+}
+.pp-stepchange.dir-higher{background:var(--gold-soft);border-color:var(--gold)}
+.pp-stepchange.dir-lower{background:var(--teal-soft);border-color:var(--teal)}
+.pp-stepnote{font-size:.82rem;color:var(--crimson);margin-top:6px}
+.pp-connector{
+  margin:8px 0 12px; padding-left:2px;
+  font-size:.8rem; color:var(--muted); font-family:var(--f-mono);
+}
+.linkish{
+  background:none; border:0; padding:0; margin-top:8px;
+  color:var(--crimson); font-size:.82rem; cursor:pointer; text-decoration:underline;
+}
+
+/* ---- the doctor's longitudinal view ---- */
+.pp-doctor .pp-comparison{border:1px solid var(--line);border-radius:8px;margin-top:14px}
+.pp-doctorform{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.pp-formrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.pp-formrow label{flex:1;min-width:130px}
+.pp-doctorform label span{display:block;font-size:.78rem;margin-bottom:4px}
+.pp-doctorform input,.pp-doctorform select{
+  width:100%; padding:8px 10px; border:1px solid var(--line-2); border-radius:6px;
+  background:var(--surface); color:var(--ink); font-size:.88rem;
+}
+
+@media (max-width:620px){
+  /* SVG text is in user units, so it shrinks with the viewBox. On a phone the axis
+     would land around 5px. The marks scale up to stay readable; the journey list below
+     is still the full text alternative. */
+  .pp-axis{font-size:14px}
+  .pp-plabel{font-size:14px}
+  .pp-comparison .pp-sides{grid-template-columns:1fr}
+  /* Side by side becomes stacked, so the arrow turns to point down. */
+  .pp-arrow{transform:rotate(90deg);justify-self:center}
+  .pp-returning{flex-wrap:wrap}
+  .pp-retcta{margin-left:0;width:100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .pp-point .pp-dot{transition:none}
+}
+/* Colour is never the only carrier, so a forced-colors display loses nothing but the
+   fills. The marks keep their shape, their labels and their outlines. */
+@media (forced-colors:active){
+  .pp-dot{fill:CanvasText;stroke:Canvas}
+  .pp-dot.hollow{fill:Canvas;stroke:CanvasText}
+  .pp-line{stroke:CanvasText}
+}
+
+/* The API said it cannot search, before we offered to. Styled as a note, not an alarm:
+   nothing on the result page above it is affected, and the sentence says so. */
+.cf-unavailable{
+  margin-top:14px; padding:14px 16px;
+  border:1px dashed var(--line-2); border-radius:9px; background:var(--surface-2);
+}
+.cf-unavailablemsg{margin:0; font-size:.9rem; color:var(--ink-2); line-height:1.5}
+.cf-unavailable .cb-note{margin-top:6px !important}
+/* The operator's line. Names the missing variable, never its value — the same string
+   /health has always published. It disappears the moment the API is configured. */
+.cf-setup{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  margin:10px 0 0; font-size:.72rem; color:var(--muted); line-height:1.5;
+  padding-top:9px; border-top:1px solid var(--line);
+}
+.cf-setuptag{
+  font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+  padding:2px 7px; border-radius:3px;
+  color:var(--gold); border:1px solid var(--gold); background:var(--gold-soft);
+}
+.cf-code{font-size:.72rem; opacity:.75}
+
+/* ---- patient -> doctor sharing ---------------------------------------- */
+.sharelist{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.sharelist li{
+  display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  border:1px solid var(--line);border-radius:9px;padding:12px 14px;background:var(--surface-2);
+}
+.sharewhen{font-size:.72rem;margin-top:2px}
+.sharecode{
+  border:1px solid var(--teal);background:var(--teal-soft);border-radius:10px;
+  padding:16px 18px;margin-top:14px;
+}
+.sharecodevalue{
+  font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700;letter-spacing:.18em;
+  color:var(--teal);line-height:1.1;
+}
+.addpatient{margin-bottom:0}
+.addpatientrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.addpatientrow .txt{flex:1 1 200px;max-width:260px;letter-spacing:.14em;text-transform:uppercase}
+.addpatientrow button{min-height:48px;flex:none}

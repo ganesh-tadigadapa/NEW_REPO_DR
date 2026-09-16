@@ -5,8 +5,9 @@
  * to the API with the decision.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
+import Guard from "@/components/Guard";
 import Shell from "@/components/Shell";
-import { API_BASE, ICDR_LABELS, submitReview } from "@/lib/api";
+import { getScans, ICDR_LABELS, submitReview } from "@/lib/api";
 
 type Scan = {
   scan_id: string; created_at: string; icdr_grade: number | null;
@@ -24,10 +25,9 @@ export default function Review() {
   const t0 = useRef<number>(Date.now());
 
   const load = () =>
-    fetch(`${API_BASE}/v1/scans?limit=50`, { cache: "no-store" })
-      .then((r) => r.json())
+    getScans(50)
       .then((d) => setScans((d.scans || []).filter((s: Scan) => s.gradeable)))
-      .catch((e) => setErr(String(e)));
+      .catch((e) => setErr(String(e.message || e)));
 
   useEffect(() => { load(); }, []);
   const pending = useMemo(() => scans.filter((s) => !s.review), [scans]);
@@ -51,6 +51,7 @@ export default function Review() {
   };
 
   return (
+    <Guard>
     <Shell>
       {err && <div className="err" style={{ marginBottom: 14 }}>{err}</div>}
       {!cur ? (
@@ -128,5 +129,6 @@ export default function Review() {
         </div>
       )}
     </Shell>
+    </Guard>
   );
 }

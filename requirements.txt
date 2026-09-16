@@ -20,6 +20,25 @@ pydantic==2.9.2
 # --- report ---
 reportlab==4.2.5
 
+# --- auth ---
+# Nothing. Authentication is this project's own OTP flow: the code is generated with
+# `secrets`, hashed with `hmac`/`hashlib`, and delivered over `httpx` (below) to the
+# httpSMS API. No identity-provider SDK is installed, and none is needed.
+#
+# `firebase-admin` used to be here for Firebase Phone Auth and has been removed with it.
+#
+# PINNED, and the pin is load-bearing. TensorFlow 2.16.2 requires protobuf <5.0.0, and
+# several Google client libraries resolve it to >=5 when left unpinned, which breaks the
+# grading model at import. Keep this pin whatever else changes.
+protobuf==4.25.5
+
+# OPTIONAL, not installed by default: `src/api/store.py::FirestoreStore` is reachable
+# only with USE_FIRESTORE=1 and imports `google.cloud.firestore`, which used to arrive
+# transitively through firebase-admin. It is off by default and `get_store()` falls back
+# to the local JSON store when the import fails, so nothing breaks without it. If you do
+# want Firestore, install it explicitly and keep the protobuf pin above:
+#     google-cloud-firestore==2.16.1
+
 # --- utils ---
 python-dotenv==1.0.1
 httpx==0.27.2
